@@ -1,7 +1,10 @@
 <ion-view title="Custom Workout">
     <ion-content padding="true" class="has-header">
+        <div id="custom-workout-header">
+            <img src="/img/custom.png">
+        </div>
         <form class="list">
-            <label class="item item-select">
+            <label class="item item-input item-select">
                 <span class="input-label">Categories</span>
                 <select>
                     <option>Time</option>
@@ -10,11 +13,10 @@
                 
             </label>
         </form>
-        <div class="spacer" style="width: 300px; height: 32px;"></div>
         <form class="list">
             <label class="item item-input">
-                <span class="input-label">Input</span>
-                <input type="text" placeholder="">
+                <span class="input-label">Time</span>
+                <input type="time" value="00:00">
             </label>
         </form>
 

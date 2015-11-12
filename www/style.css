@@ -35,10 +35,10 @@
   margin-left: auto;
   margin-right: auto;
 
-  margin-top: 25px;
-
-
   border-radius: 50%;
+  -webkit-border-radius: 50%;
+
+  margin-top: 25px;
 
   border: 2px solid #54c6ca;
 
@@ -46,7 +46,7 @@
 }
 
 .angular-google-map {
-  margin-top: -110%;
+  margin-top: -130%;
 }
 
 #status {
@@ -102,6 +102,24 @@
 
   color: white;
   padding-top: 23px;
+}
+
+#custom-workout-header {
+  width: 100%;
+  margin-bottom: 35px;
+  margin-top: 20px;
+}
+
+#custom-workout-header img {
+  width: 90px;
+  height: 90px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.item {
+  width: 100%;
 }
 
 #health-status {

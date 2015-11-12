@@ -24,6 +24,10 @@ angular.module('app.controllers', [])
 
 })
 
+.controller('runCtrl', function($scope) {
+ $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+})
+
 .controller('workoutDetailCtrl', function($scope) {
 $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 })

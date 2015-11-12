@@ -15,6 +15,111 @@
     text-align: center;
 }
 
+#metrics {
+  text-align: center;
+}
+
+#time {
+  font-size: 320%;
+  margin-bottom: 25px;
+  margin-top:18px;
+  margin-right: -5px;
+}
+
+#map-container {
+  width: 85%;
+  padding-top: 85%;
+  height: 0;
+  overflow: hidden;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: 25px;
+
+
+  border-radius: 50%;
+
+  border: 2px solid #54c6ca;
+
+  margin-bottom: 20px;
+}
+
+.angular-google-map {
+  margin-top: -110%;
+}
+
+#status {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+#distance {
+  font-size: 115%;
+}
+
+.button-calm {
+  background-color: #54c6ca!important;
+}
+
+#end-workout {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+
+  border-radius: 25px;
+  min-height: 40px;
+  height: 40px;
+
+  line-height: 38px;
+
+  font-size: 100%;
+
+  background-color: #54c6ca;
+  border:none;
+}
+
+#end-workout:active {
+  background-color: #359093!important;
+}
+
+#health-heart-icon {
+  background-image: url("/img/heart.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 80px;
+  height: 80px;
+  margin-top: 15px;
+
+  font-size: 200%;
+
+  font-family: "Roboto";
+
+  text-shadow: 2px 2px 0px #B71C1C;
+
+  color: white;
+  padding-top: 23px;
+}
+
+#health-status {
+  width: 35%;
+
+  display: inline-block;
+  vertical-align: top;
+}
+
+#run-metrics {
+  width: 50%;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
+
+  text-align: right;
+}
+
 .round-home-container-flex {
       display: -webkit-box;
       display: -moz-box;
@@ -95,6 +200,11 @@
 /*.eag-claimheader * {
   background-color: #81D4FA; // #E1F5FE
 } */
+
+.bar-calm {
+  background-color: #54c6ca!important;
+  border:none;
+}
 
 .round-center-container {
       display: -webkit-box;

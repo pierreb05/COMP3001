@@ -1,0 +1,35 @@
+<ion-view title="Run!">
+    <ion-content padding="true" class="has-header">
+    	<div id="metrics">
+    		<div id="health-status">
+    			<div id="health-heart-icon">
+    				92
+    			</div>
+    		</div>
+
+    		<div id="run-metrics">
+    			<div id="time">
+    				10:39
+    			</div>
+
+    			<div id="distance">
+    				10,450m left
+    			</div>
+
+    			<div id="speed">
+    				13 km / h
+    			</div>
+    		</div>
+    	</div>
+
+    	<div id="map-container">
+            <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+        </div>
+
+        <div id="status">
+        	Warning - You are running in a highly polluted zone
+        </div>
+
+        <a href="#/run" id="end-workout" class="button button-block button-calm">End workout</a>
+    </ion-content>
+</ion-view>

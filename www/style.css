@@ -84,17 +84,6 @@
   opacity: 0.7;
 }
 
-#distance-title {
-  font-size: 280%;
-  margin-bottom: 4px;
-}
-
-#distance {
-  text-align: center;
-  margin-top: 15px;
-  font-size: 90%!important;
-}
-
 body {
   font-family: "Roboto";
   text-rendering: optimizeLegibility;
@@ -226,10 +215,6 @@ body {
   margin-right: auto;
   text-align: center;
   margin-bottom: 15px;
-}
-
-#distance {
-  font-size: 115%;
 }
 
 .button-calm {

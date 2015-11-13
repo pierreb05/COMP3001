@@ -1,0 +1,31 @@
+<ion-view title="Pollution Map">  
+
+      <ion-content padding="true" class="has-header">
+     
+        <label class="item item-input" id="address-input" name="address">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="search" placeholder="postcode or address">
+        </label>
+
+        <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+
+        <div id="legend">
+          <div id="legend-title">Legend</div>
+
+          <ul>
+            <li>
+                <span id="green-box" class="box"></span> Low pollution zones
+            </li>
+
+            <li>
+                <span id="orange-box" class="box"></span> Medium pollution zones
+            </li>
+
+            <li>
+                <span id="red-box" class="box"></span> High pollution zones
+            </li>
+          </ul>
+        </div>
+      </ion-content>
+       
+    </ion-view>

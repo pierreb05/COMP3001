@@ -1,0 +1,392 @@
+.col {
+  margin-bottom: 20px;
+}
+
+#round-home-btn {
+  text-align: center;
+}
+
+#round-home-btn img {
+  width: 70%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+#recap-header {
+  font-size: 125%;
+  text-align: center;
+  margin-bottom: 35px;
+  font-weight: 500;
+
+  margin-top: 15px;
+
+  color: rgb(52,52,52);
+}
+
+#recap-content .row {
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.col {
+  font-size: 110%;
+  text-align: right;
+}
+
+.label-col {
+  font-weight: 500;
+  color: rgb(52,52,52);
+  text-align: left!important;
+}
+
+#recap-header img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 12px;
+  width: 70px;
+  height: 70px;
+}
+
+#menu {
+  margin-top: -10px!important;
+}
+
+#average-health #health-heart-icon {
+  width: 45px;
+  font-size: 100%;
+  padding-top: 10px!important;
+  text-align: center;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#average-health {
+  text-align: center;
+  font-size: 130%;
+  color: rgb(52,52,52);
+
+  margin-top: 10px;
+}
+
+.round-home-label {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+
+  font-size: 110%!important;
+
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+body {
+  font-family: "Roboto";
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.round-home-icon {
+    width: 148px;
+}
+
+.round-home-align{
+    text-align: center;
+}
+
+#environment-header {
+  text-align: center;
+}
+
+#environment-header img {
+  width: 40px;
+  height: 40px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  display: block;
+
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+#metrics {
+  text-align: center;
+}
+
+#time {
+  font-size: 320%;
+  margin-bottom: 25px;
+  margin-top:18px;
+  margin-right: -5px;
+}
+
+#map-container {
+  width: 85%;
+  padding-top: 85%;
+  height: 0;
+  overflow: hidden;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+
+  -webkit-transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+
+  margin-top: 25px;
+
+  border: 2px solid #54c6ca;
+
+  margin-bottom: 20px;
+}
+
+#legend-title {
+  font-size: 120%;
+  margin-top: 15px;
+  margin-bottom: 8px;
+
+  font-family: "Roboto";
+}
+
+.box {
+  width: 40px;
+  height: 22px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#green-box {
+  background-color: green;
+}
+
+#orange-box {
+  background-color: orange;
+}
+
+#red-box {
+  background-color: red;
+}
+
+#address-input {
+  margin-bottom: 12px;
+}
+
+#directions-map-container .angular-google-map-container {
+  height: 300px!important;
+}
+
+#settings-icon {
+  width: 90px;
+  height: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+
+  margin-bottom: 30px;
+  margin-top: 15px;
+}
+
+.input-label {
+  width: auto;
+  margin-right: 20px;
+}
+
+#map-container .angular-google-map {
+  margin-top: -130%;
+}
+
+#status {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.button-calm {
+  background-color: #54c6ca!important;
+}
+
+#end-workout {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+
+  border-radius: 25px;
+  min-height: 40px;
+  height: 40px;
+
+  line-height: 38px;
+
+  font-size: 100%;
+
+  background-color: #54c6ca;
+  border:none;
+}
+
+#end-workout:active {
+  background-color: #359093!important;
+}
+
+#health-heart-icon {
+  background-image: url("/img/heart.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 80px;
+  height: 80px;
+  margin-top: 15px;
+
+  font-size: 200%;
+
+  font-family: "Roboto";
+
+  text-shadow: 2px 2px 0px #B71C1C;
+
+  color: white;
+  padding-top: 23px;
+}
+
+#custom-workout-header {
+  width: 100%;
+  margin-bottom: 35px;
+  margin-top: 20px;
+}
+
+#custom-workout-header img {
+  width: 90px;
+  height: 90px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.item {
+  width: 100%;
+}
+
+#health-status {
+  width: 35%;
+
+  display: inline-block;
+  vertical-align: top;
+}
+
+#run-metrics {
+  width: 50%;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
+
+  text-align: right;
+}
+
+.round-home-container-flex {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+}
+
+.round-home-container {
+    padding: 5px;
+    margin: auto;
+}
+
+.round-no-margin {
+  margin: 0px !important;
+}
+
+.round-less-padding {
+  padding: 4px;
+}
+
+.round-no-padding {
+  padding: 0px;
+}
+
+.round-custom-selector-padding {
+  padding: 0px;
+  padding-left: 3px;
+}
+
+.round-text-center {
+  text-align:center;
+}
+
+.round-text-left {
+  text-align:left;
+}
+
+.round-text-right {
+  text-align:right;
+}
+
+.round-receipt-area{
+  width:100%;
+  height:200px;
+  background-color: $positive ;
+}
+
+.round-bg-light-blue{
+  background-color: #81D4FA;
+}
+
+.round-float-left{
+   float: left;
+}
+
+.round-float-right{
+   float: right;
+}
+
+.round-claimtotal-label{
+  font-size: small;
+  padding-right:5px;
+}
+
+.round-claimtotal{
+  font-size: x-large;
+  color: $positive;
+}
+
+/*.eag-claimheader * {
+  background-color: #81D4FA; // #E1F5FE
+} */
+
+.bar-calm {
+  background-color: #54c6ca!important;
+  border:none;
+}
+
+.round-center-container {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+}
+
+.round-center {
+    padding: 5px;
+    margin: auto;
+    transform: translateY(5%);
+}
+
+.round-full-width {
+  width: 100%;
+}

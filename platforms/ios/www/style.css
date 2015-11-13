@@ -1,0 +1,192 @@
+.round-home-button {
+  min-height: 150px;
+
+}
+.round-home-button img {
+  width:70%;
+
+}
+
+.round-home-icon {
+    width: 148px;
+}
+
+.round-home-align{
+    text-align: center;
+}
+
+#metrics {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#time {
+  font-size: 320%;
+  margin-bottom: 25px;
+  margin-top:18px;
+}
+
+#map-container {
+  width: 95%;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: 30px;
+
+  height: 250px;
+
+  border: 2px solid rgb(200,7,3);
+  margin-bottom: 2px;
+}
+
+#status {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+#distance {
+  font-size: 115%;
+}
+
+#end-workout {
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+
+  border-radius: 25px;
+  min-height: 40px;
+  height: 40px;
+
+  line-height: 38px;
+}
+
+#health-heart-icon {
+  background-color: red;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-top: 15px;
+
+  font-size: 250%;
+
+  color: white;
+  padding-top: 28px;
+}
+
+#health-status {
+  width: 35%;
+
+  display: inline-block;
+  vertical-align: top;
+}
+
+#run-metrics {
+  width: 50%;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: top;
+
+  text-align: right;
+}
+
+.round-home-container-flex {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+}
+
+.round-home-container {
+    padding: 5px;
+    margin: auto;
+}
+
+.round-home-label {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+  transform: translateY(-75%);
+}
+
+.round-no-margin {
+  margin: 0px !important;
+}
+
+.round-less-padding {
+  padding: 4px;
+}
+
+.round-no-padding {
+  padding: 0px;
+}
+
+.round-custom-selector-padding {
+  padding: 0px;
+  padding-left: 3px;
+}
+
+.round-text-center {
+  text-align:center;
+}
+
+.round-text-left {
+  text-align:left;
+}
+
+.round-text-right {
+  text-align:right;
+}
+
+.round-receipt-area{
+  width:100%;
+  height:200px;
+  background-color: $positive ;
+}
+
+.round-bg-light-blue{
+  background-color: #81D4FA;
+}
+
+.round-float-left{
+   float: left;
+}
+
+.round-float-right{
+   float: right;
+}
+
+.round-claimtotal-label{
+  font-size: small;
+  padding-right:5px;
+}
+
+.round-claimtotal{
+  font-size: x-large;
+  color: $positive;
+}
+
+/*.eag-claimheader * {
+  background-color: #81D4FA; // #E1F5FE
+} */
+
+.round-center-container {
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+}
+
+.round-center {
+    padding: 5px;
+    margin: auto;
+    transform: translateY(5%);
+}
+
+.round-full-width {
+  width: 100%;
+}

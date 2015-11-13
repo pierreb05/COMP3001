@@ -24,6 +24,10 @@ angular.module('app.controllers', [])
 
 })
 
+.controller('recapCtrl', function($scope) {
+
+})
+
 .controller('runCtrl', function($scope) {
  $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 })

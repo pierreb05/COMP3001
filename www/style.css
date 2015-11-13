@@ -1,10 +1,105 @@
-.round-home-button {
-  min-height: 150px;
-
+.col {
+  margin-bottom: 20px;
 }
-.round-home-button img {
-  width:70%;
 
+#round-home-btn {
+  text-align: center;
+}
+
+#round-home-btn img {
+  width: 70%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+#recap-header {
+  font-size: 125%;
+  text-align: center;
+  margin-bottom: 35px;
+  font-weight: 500;
+
+  margin-top: 15px;
+
+  color: rgb(52,52,52);
+}
+
+#recap-content .row {
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.col {
+  font-size: 110%;
+  text-align: right;
+}
+
+.label-col {
+  font-weight: 500;
+  color: rgb(52,52,52);
+  text-align: left!important;
+}
+
+#recap-header img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 12px;
+  width: 70px;
+  height: 70px;
+}
+
+#menu {
+  margin-top: -10px!important;
+}
+
+#average-health #health-heart-icon {
+  width: 45px;
+  font-size: 100%;
+  padding-top: 10px!important;
+  text-align: center;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#average-health {
+  text-align: center;
+  font-size: 130%;
+  color: rgb(52,52,52);
+
+  margin-top: 10px;
+}
+
+.round-home-label {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+
+  font-size: 110%!important;
+
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+#distance-title {
+  font-size: 280%;
+  margin-bottom: 4px;
+}
+
+#distance {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 90%!important;
+}
+
+body {
+  font-family: "Roboto";
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 .round-home-icon {
@@ -13,6 +108,23 @@
 
 .round-home-align{
     text-align: center;
+}
+
+#environment-header {
+  text-align: center;
+}
+
+#environment-header img {
+  width: 40px;
+  height: 40px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  display: block;
+
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 #metrics {
@@ -38,6 +150,9 @@
   border-radius: 50%;
   -webkit-border-radius: 50%;
 
+  -webkit-transform: translateZ(0);
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+
   margin-top: 25px;
 
   border: 2px solid #54c6ca;
@@ -45,7 +160,63 @@
   margin-bottom: 20px;
 }
 
-.angular-google-map {
+#legend-title {
+  font-size: 120%;
+  margin-top: 15px;
+  margin-bottom: 8px;
+
+  font-family: "Roboto";
+}
+
+.box {
+  width: 40px;
+  height: 22px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#green-box {
+  background-color: green;
+}
+
+#orange-box {
+  background-color: orange;
+}
+
+#red-box {
+  background-color: red;
+}
+
+#address-input {
+  margin-bottom: 12px;
+}
+
+#directions-map-container .angular-google-map-container {
+  height: 300px!important;
+}
+
+#settings-icon {
+  width: 90px;
+  height: 90px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+
+  margin-bottom: 30px;
+  margin-top: 15px;
+}
+
+.input-label {
+  width: auto;
+  margin-right: 20px;
+}
+
+#map-container .angular-google-map {
   margin-top: -130%;
 }
 
@@ -149,13 +320,6 @@
 .round-home-container {
     padding: 5px;
     margin: auto;
-}
-
-.round-home-label {
-  padding: 0px;
-  margin: 0px;
-  text-align: center;
-  transform: translateY(-75%);
 }
 
 .round-no-margin {

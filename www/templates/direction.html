@@ -1,14 +1,20 @@
-<ion-view title="Direction">
+<ion-view title="Directions">
     <ion-content padding="true" class="has-header">
-        <form class="list"></form>
         <form class="list">
-            <label class="item item-select">
-                <span class="input-label">Destination</span>
-                <select></select>
+            <label class="item item-input">
+              <span class="input-label">A</span>
+              <input type="text">
+            </label>
+
+            <label class="item item-input">
+              <span class="input-label">B</span>
+              <input type="text">
             </label>
         </form>
 
-        <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+        <div id="directions-map-container">
+            <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+        </div>
         
         <div class="spacer" style="height: 20px;"></div>
         <ion-list>

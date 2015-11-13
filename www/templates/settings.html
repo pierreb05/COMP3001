@@ -1,27 +1,16 @@
 <ion-view title="Settings">
     <ion-content padding="true" class="has-header">
+        <img id="settings-icon" src="/img/settings.png">
+
         <form class="list">
-            <label class="item item-input">
-                <span class="input-label">My Health Condition</span><textarea placeholder=""> </textarea>
-            </label>
-            <label class="item item-select">
-                <span class="input-label">health conditions</span>
-                <select></select>
-            </label>
-        </form>
-        <div class="spacer" style="width: 300px; height: 45px;"></div>
-        <form class="list">
-            <label class="item item-input">
-                <span class="input-label">Notification</span><textarea placeholder=""> </textarea>
-            </label>
-            <div>
-                <p>
-                    &nbsp; &nbsp; Alert me for
-                </p>
+
+            <div style="margin-bottom: 10px; font-size:110%">
+                Alert me when I am
             </div>
-            <ion-checkbox>air pollution news</ion-checkbox>
-            <ion-checkbox>and so on</ion-checkbox>
-            <ion-checkbox>and so on</ion-checkbox>
+
+            <ion-checkbox>entering a high risk zone</ion-checkbox>
+            <ion-checkbox>entering a medium risk zone</ion-checkbox>
+            <ion-checkbox>deviating from the route set up</ion-checkbox>
         </form>
         <button class="button button-block button-calm"> Save </button>
     </ion-content>

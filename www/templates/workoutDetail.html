@@ -1,12 +1,15 @@
-<ion-view title="Workout Detail">
+<ion-view title="Confirm workout">
     <ion-content padding="true" class="has-header">
-        <form class="list">
-            <label class="item item-input">
-                <span class="input-label">You are in safe environment.</span><textarea placeholder=""> </textarea>
-            </label>
-        </form>
-        <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
-        
+
+    	<div id="environment-header">
+    		<img src="/img/checkmark.png">
+    		You are in a safe environment
+    	</div>
+
+    	<div id="map-container">
+        	<ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+        </div>
+
         <a href="#/run" class="button button-block button-calm">Run</a>
     </ion-content>
 </ion-view>

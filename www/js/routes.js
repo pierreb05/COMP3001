@@ -72,6 +72,12 @@ angular.module('app.routes', [])
       templateUrl: 'templates/run.html',
       controller: 'runCtrl'
     })
+
+    .state('recap', {
+      url: '/end',
+      templateUrl: 'templates/recap.html',
+      controller: 'recapCtrl'
+    })
       
         
     .state('workoutDetail', {

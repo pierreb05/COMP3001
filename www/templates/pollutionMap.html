@@ -4,10 +4,17 @@
      
         <label class="item item-input" id="address-input" name="address">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="postcode or address">
+                 <input id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1" options = "options1">
         </label>
 
-        <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+        <div>result: {{result1}}</div>
+        <div>lat: {{details1.geometry.location.lat()}}</div>
+        <div>long: {{details1.geometry.location.lng()}}</div>
+
+         <div id="directions-map-container">
+            <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+        </div>
+
 
         <div id="legend">
           <div id="legend-title">Legend</div>

@@ -35,3 +35,20 @@ angular.module('app.controllers', [])
 .controller('workoutDetailCtrl', function($scope) {
 $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
 })
+
+
+.controller('LocationCtrl', function($scope){
+
+    $scope.location = {};
+    $scope.location.details = {};
+		$scope.updateValues = function () {
+
+    setTimeout(function () {
+      $('#lat').val($scope.location.details.geometry.location.k);
+      $('#lng').val($scope.location.details.geometry.location.D);
+      console.log($scope.location);
+    }, 150);
+
+  }
+   
+  });

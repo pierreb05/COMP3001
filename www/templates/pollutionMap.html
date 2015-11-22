@@ -4,12 +4,13 @@
                                  
         <label class="item item-input" id="address-input" name="address">
                 <i class="icon ion-search placeholder-icon"></i>
-                 <input id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1" options = "options1" ng-blur="updateMap()">
+                 <input placeholder = "Enter area" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1" options = "options1" ng-blur="">
         </label>
 
         <div>result: {{result1}}</div>
         <div>lat: {{details1.geometry.location.lat()}}</div>
         <div>long: {{details1.geometry.location.lng()}}</div>
+        <button class = "button button-positive button-block" ng-click = "updateMap(details1.geometry.location.lat(), details1.geometry.location.lng())">Search</button>
 
          <div id="directions-map-container">
             <ui-gmap-google-map center='map.center' id = "map-canvas" zoom='map.zoom'></ui-gmap-google-map>

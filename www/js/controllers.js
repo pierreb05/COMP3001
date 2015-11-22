@@ -5,7 +5,12 @@ angular.module('app.controllers', [])
 })
 
 .controller('pollutionMapCtrl', function($scope) {
- $scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+ $scope.map = { center: { latitude: 51.508742, longitude: -0.120850 }, zoom: 8 };
+ $scope.updateMap = function () {
+ 		//var lat = pos.geometry.location.lat();
+ 		//var lng = pos.geometry.location.lng();
+		//$scope.map = { center: { latitude: lat, longitude: lng }, zoom: 8 };
+ 	}
 })
 
 .controller('settingsCtrl', function($scope) {
@@ -33,22 +38,9 @@ angular.module('app.controllers', [])
 })
 
 .controller('workoutDetailCtrl', function($scope) {
-$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+
+	$scope.map = { center: { latitude: 45, longitude: -73 }, zoom: 8 };
+	
 })
 
 
-.controller('LocationCtrl', function($scope){
-
-    $scope.location = {};
-    $scope.location.details = {};
-		$scope.updateValues = function () {
-
-    setTimeout(function () {
-      $('#lat').val($scope.location.details.geometry.location.k);
-      $('#lng').val($scope.location.details.geometry.location.D);
-      console.log($scope.location);
-    }, 150);
-
-  }
-   
-  });

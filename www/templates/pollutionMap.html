@@ -1,10 +1,10 @@
 <ion-view title="Pollution Map">  
 
-      <ion-content padding="true" class="has-header">
-     
+      <ion-content padding="true" class="has-header" ng-controller = "pollutionMapCtrl">
+                                 
         <label class="item item-input" id="address-input" name="address">
                 <i class="icon ion-search placeholder-icon"></i>
-                 <input id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1" options = "options1">
+                 <input id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1" options = "options1" ng-blur="updateMap()">
         </label>
 
         <div>result: {{result1}}</div>
@@ -12,7 +12,7 @@
         <div>long: {{details1.geometry.location.lng()}}</div>
 
          <div id="directions-map-container">
-            <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
+            <ui-gmap-google-map center='map.center' id = "map-canvas" zoom='map.zoom'></ui-gmap-google-map>
         </div>
 
 

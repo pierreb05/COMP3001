@@ -1,22 +1,85 @@
 <ion-view title="Directions">
-    <ion-content padding="true" class="has-header">
+    <ion-content padding="true" class="has-header" ng-controller = "directionCtrl">
         <form class="list">
             <label class="item item-input">
               <span class="input-label">A</span>
-              <input id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1"/>
+              <input placeholder = "Enter start location" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1"/>
             </label>
 
             <label class="item item-input">
               <span class="input-label">B</span>
-              <input type="text">
+               <input placeholder = "Enter end location" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result2" details = "details2"/>
             </label>
         </form>
 
-        <div id="directions-map-container">
+         <label class="item item-input item-select">
+            <div class="input-label">
+              When?
+            </div>
+            <select>
+              <option>One hour from now</option>
+              <option selected>Now</option>
+              <option>Two hours from now</option>
+            </select>
+          </label><br>
+
+          <button class = "button button-positive button-block" ng-click = "drawRoutes(details1.geometry.location.lat(), details1.geometry.location.lng(), details2.geometry.location.lat(), details2.geometry.location.lng())">Search for routes</button>
+
+        <!--<div id="directions-map-container">
             <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
-        </div>
-        
+        </div>-->
+         <div map-lazy-load="http://maps.google.com/maps/api/js">
+        <map center="51.5085300, -0.1257400" zoom="12">
+            <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[0].path}}></shape>
+
+              <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="blue" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[1].path}}></shape>
+
+               <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="cyan" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[2].path}}></shape>
+
+               <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="green" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[3].path}}></shape>
+
+               <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="yellow" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[4].path}}></shape>
+
+               <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="magenta" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[5].path}}></shape>
+
+               <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="#123456" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[6].path}}></shape>
+
+               <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="#a0b1c2" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[7].path}}></shape>
+
+               <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="#12b4ff" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[8].path}}></shape>
+
+               <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="#aa2312" stroke-opacity="1.0" stroke-weight="2"
+              path={{routes[9].path}}></shape>
+
+        </map>
+      </div>
+
         <div>result: {{result1}}</div>
+        <div>lat: {{details1.geometry.location.lat()}}</div>
+        <div>long: {{details1.geometry.location.lng()}}</div>
+        <br>
+        <div>result2: {{result2}}</div>
+        <div>lat2: {{details2.geometry.location.lat()}}</div>
+        <div>long2: {{details2.geometry.location.lng()}}</div>
 
         <div class="spacer" style="height: 20px;"></div>
         <ion-list>

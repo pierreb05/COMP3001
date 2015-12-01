@@ -1,16 +1,23 @@
 <ion-view title="Directions">
     <ion-content padding="true" class="has-header" ng-controller = "directionCtrl">
-        <form class="list">
+        
+
+        <form name = "directionForm" novalidate >
             <label class="item item-input">
               <span class="input-label">A</span>
-              <input placeholder = "Enter start location" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1"/>
+              <input name = "start" placeholder = "Enter start location" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1" required>
             </label>
+
+            
 
             <label class="item item-input">
               <span class="input-label">B</span>
-               <input placeholder = "Enter end location" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result2" details = "details2"/>
+               <input name = "end" placeholder = "Enter end location" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result2" details = "details2" required>
             </label>
-        </form>
+
+            <button class = "button button-block button-assertive" ng-show="directionForm.end.$error.required && directionForm.end.$touched || directionForm.start.$error.required && directionForm.start.$touched" disabled>Please enter valid locations.</button> 
+
+       
 
          <label class="item item-input item-select">
             <div class="input-label">
@@ -23,7 +30,8 @@
             </select>
           </label><br>
 
-          <button class = "button button-positive button-block" ng-click = "drawRoutes(details1.geometry.location.lat(), details1.geometry.location.lng(), details2.geometry.location.lat(), details2.geometry.location.lng())">Search for routes</button>
+          <button ng-disabled="directionForm.$invalid" type = "submit" class = "button button-positive button-block" ng-click = "drawRoutes(details1.geometry.location.lat(), details1.geometry.location.lng(), details2.geometry.location.lat(), details2.geometry.location.lng())">Search for routes</button>
+      </form>
 
         <!--<div id="directions-map-container">
             <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
@@ -73,13 +81,13 @@
         </map>
       </div>
 
-        <div>result: {{result1}}</div>
+       <!-- <div>result: {{result1}}</div>
         <div>lat: {{details1.geometry.location.lat()}}</div>
         <div>long: {{details1.geometry.location.lng()}}</div>
         <br>
         <div>result2: {{result2}}</div>
         <div>lat2: {{details2.geometry.location.lat()}}</div>
-        <div>long2: {{details2.geometry.location.lng()}}</div>
+        <div>long2: {{details2.geometry.location.lng()}}</div>-->
 
         <div class="spacer" style="height: 20px;"></div>
         <ion-list>

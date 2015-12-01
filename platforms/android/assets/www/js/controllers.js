@@ -1,8 +1,8 @@
-angular.module('app.controllers', []);
+angular.module('app.controllers', [])
 
 .controller('homeCtrl', function($scope) {
 
-});
+})
 
 .controller('pollutionMapCtrl', function($scope) {
  /*$scope.map = { center: { latitude: 51.508742, longitude: -0.120850 }, zoom: 8 };
@@ -19,7 +19,7 @@ angular.module('app.controllers', []);
 		$scope.map.setCenter(new google.maps.LatLng(lat, lng));
 		$scope.map.setZoom(15);
  	}
-});
+})
 
 .controller('settingsCtrl', function($scope) {
 
@@ -81,24 +81,24 @@ angular.module('app.controllers', []);
 
 .controller('newWorkoutCtrl', function($scope) {
 
-});
+})
 
 .controller('customWorkoutCtrl', function($scope) {
 
-});
+})
 
 .controller('recapCtrl', function($scope) {
 
-});
+})
 
 .controller('runCtrl', function($scope) {
  $scope.map = { center: { latitude: 51.5085300, longitude: -0.1257400 }, zoom: 8 };
-});
+})
 
 .controller('workoutDetailCtrl', function($scope) {
 
 	$scope.map = { center: { latitude: 51.5085300, longitude: -0.1257400 }, zoom: 8 };
 	
-});
+})
 
 

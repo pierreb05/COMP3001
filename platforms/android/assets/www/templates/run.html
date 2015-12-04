@@ -1,5 +1,5 @@
-<ion-view title="Run!">
-    <ion-content padding="true" class="has-header">
+<ion-view title="Run!" >
+    <ion-content padding="true" class="has-header" ng-controller = "runCtrl">
     	<div id="metrics">
     		<div id="health-status">
     			<div id="health-heart-icon">
@@ -8,9 +8,9 @@
     		</div>
 
     		<div id="run-metrics">
-    			<div id="time">
-    				10:39
-    			</div>
+    			<div id="time" ng-init="startTimer()">
+                {{minute1}}{{minute2}}:{{second1}}{{second2}}
+                </div>
 
     			<div id="distance">
     				10,450m left
@@ -22,7 +22,7 @@
     		</div>
     	</div>
 
-    	<div id="map-container">
+    	<div id="map-container2">
             <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
         </div>
 

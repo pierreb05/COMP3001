@@ -11,7 +11,7 @@ angular.module('app.controllers', [])
  	}*/
 
  	 $scope.$on('mapInitialized', function(event, map) {
-      map.setCenter(new google.maps.LatLng(51.5085300, -0.1257400));
+      //map.setCenter(new google.maps.LatLng(51.5085300, -0.1257400));
       //$scope.map.setZoom(12);
     });
 
@@ -91,13 +91,146 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('runCtrl', function($scope) {
- $scope.map = { center: { latitude: 51.5085300, longitude: -0.1257400 }, zoom: 8 };
+.controller('runCtrl', function($scope, $timeout, $cordovaGeolocation) {
+
+
+ 	var options = {timeout: 10000, enableHighAccuracy: true};
+
+    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+ 
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+ 
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+ 
+    $scope.map = new google.maps.Map(document.getElementById("map-container2"), mapOptions);
+    var marker = new google.maps.Marker({
+		position: latLng,
+	    map: $scope.map	 
+	 });
+ 
+  }, function(error){
+    console.log("Could not get location");
+  });
+
+
+
+
+
+    $scope.minute1 = 0; $scope.minute2= 0, $scope.second1 = 0, $scope.second2 = 0;
+    var mytimeout = null;
+    $scope.onTimeout = function() {
+        if($scope.minute1 ==  5 && $scope.minute2 == 9 && $scope.second1 == 5 && $scope.second2 == 9) {
+            $scope.$broadcast('timer-stopped', 0);
+            $timeout.cancel(mytimeout);
+            return;
+        }
+        else if ($scope.minute2 == 5 && $scope.second1 == 5 && $scope.second2 == 9){
+            $scope.second1 = 0;
+            $scope.second2 = 0;
+            $scope.minute2 = 0;
+            $scope.minute1++;
+        }
+        else if ($scope.second1 == 5 && $scope.second2 == 9){
+            $scope.second1 = 0;
+            $scope.second2 = 0;
+            $scope.minute2++;
+        }
+        else if ($scope.second2 == 9){
+            $scope.second2 = 0;
+            $scope.second1++;
+        }
+        else $scope.second2++;
+        mytimeout = $timeout($scope.onTimeout, 1000);
+    };
+    $scope.startTimer = function() {
+        mytimeout = $timeout($scope.onTimeout, 1000);
+    };
+    
 })
 
-.controller('workoutDetailCtrl', function($scope) {
+.controller('workoutDetailCtrl', function($scope, $cordovaGeolocation) {
 
-	$scope.map = { center: { latitude: 51.5085300, longitude: -0.1257400 }, zoom: 8 };
+	/*$scope.map = { center: { latitude: 51.5085300, longitude: -0.1257400 }, zoom: 8 };
+	   $scope.$on('$ionicView.enter', function(){
+        var pos;
+        if(!!navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {        
+            pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            });
+        var mapOptions = {
+            zoom: 14,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };        
+
+
+
+        var map = new google.maps.Map(document.getElementById('map-container'), mapOptions);       
+
+        navigator.geolocation.getCurrentPosition(function(position) {        
+            var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);            
+            map.setCenter(geolocate);
+            var marker = new google.maps.Marker({
+            position: geolocate,
+            map: map,
+        });
+    });
+        
+    } 
+    else {
+       document.alert("No maps support")
+    }
+    });*/
+
+	var options = {timeout: 10000, enableHighAccuracy: true};
+
+    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+ 
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+ 
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+ 
+    $scope.map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
+
+    var marker = new google.maps.Marker({
+		position: latLng,
+	    map: $scope.map	 
+	 });
+ 
+  	}, function(error){
+   		console.log("Could not get location");
+  	});
+
+  	// onSuccess Callback
+//   This method accepts a `Position` object, which contains
+//   the current GPS coordinates
+//
+function onSuccess(position) {
+    var element = document.getElementById('geolocation');
+    element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
+                        'Longitude: ' + position.coords.longitude     + '<br />' +
+                        '<hr />'      + element.innerHTML;
+}
+
+// onError Callback receives a PositionError object
+//
+function onError(error) {
+    alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+}
+
+// Options: throw an error if no update is received every 30 seconds.
+//
+var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+
+	
 	
 })
 

@@ -154,6 +154,9 @@ angular.module('app.controllers', [])
 
 .controller('workoutDetailCtrl', function($scope, $cordovaGeolocation) {
 
+	$scope.currentLat = "s";
+$scope.currentLng = "d";
+
 	/*$scope.map = { center: { latitude: 51.5085300, longitude: -0.1257400 }, zoom: 8 };
 	   $scope.$on('$ionicView.enter', function(){
         var pos;
@@ -209,6 +212,66 @@ angular.module('app.controllers', [])
   	});
 
 
+//TRACK COORDINATES
+// call this once
+setupWatch(3000);
+
+// sets up the interval at the specified frequency
+function setupWatch(freq) {
+    // global var here so it can be cleared on logout (or whenever).
+    activeWatch = setInterval(watchLocation, freq);
+}
+
+// this is what gets called on the interval.
+function watchLocation() {
+    var gcp = navigator.geolocation.getCurrentPosition(
+            updateUserLoc, onError, {
+                enableHighAccuracy: true
+            });
+
+
+    // console.log(gcp);
+
+}
+
+function onError(error) {
+    alert('code: '    + error.code    + '\n' +
+          'message: ' + error.message + '\n');
+}
+
+
+// do something with the results
+
+function updateUserLoc(position) {
+
+
+var location = {
+    lat : position.coords.latitude,
+    lng : position.coords.longitude
+};
+
+console.log(location.lat);
+console.log(location.lng);
+
+
+	//need to scope.apply or else anguarjs is unaware of the update, update every second
+     setTimeout(function () {
+        $scope.$apply(function () {
+            $scope.currentLat =  location.lat;
+			$scope.currentLng = location.lng;
+        });
+    }, 1000);
+
+
+}
+
+
+
+// stop watching
+
+function logout() {
+    clearInterval(activeWatch);
+}
 	
 })
 

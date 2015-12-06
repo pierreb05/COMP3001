@@ -68,7 +68,7 @@ angular.module('app.routes', [])
         
       
     .state('run', {
-      url: '/run',
+      url: '/run/:workoutId',
       templateUrl: 'templates/run.html',
       controller: 'runCtrl'
     })
@@ -81,7 +81,7 @@ angular.module('app.routes', [])
       
         
     .state('workoutDetail', {
-      url: '/detail',
+      url: '/detail/:workoutId',
       templateUrl: 'templates/workoutDetail.html',
       controller: 'workoutDetailCtrl'
     })

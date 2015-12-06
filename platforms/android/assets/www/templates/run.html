@@ -1,9 +1,9 @@
-<ion-view title="Run!" >
+<ion-view title="Run!"  cache-view="false">
     <ion-content padding="true" class="has-header" ng-controller = "runCtrl">
     	<div id="metrics">
     		<div id="health-status">
     			<div id="health-heart-icon">
-    				74
+    				74 
     			</div>
     		</div>
 
@@ -12,19 +12,34 @@
                 {{minute1}}{{minute2}}:{{second1}}{{second2}}
                 </div>
 
-    			<div id="distance">
-    				10,450m left
-    			</div>
+    			<div id="distance" ng-init="startDistance()">
+                    {{distance}} m past
+                </div>
 
-    			<div id="speed">
-    				13 km / h
-    			</div>
+                <div id="speed">
+                    {{speed}} km/h
+                </div>
     		</div>
     	</div>
 
-    	<div id="map-container2">
+    	<!--<div id="map-container2">
             <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
-        </div>
+        </div>-->
+                 <div map-lazy-load="http://maps.google.com/maps/api/js">
+                <map center="current-location" zoom="15" min-zoom="8">
+                     <!-- <shape id="polyline" name="polyline" 
+                      geodesic="true" stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="2"
+                      path={{circle[0].path}}></shape>
+
+                      <shape id="polyline" name="polyline" 
+                      geodesic="true" stroke-color="blue" stroke-opacity="1.0" stroke-weight="2"
+                      path={{circle[1].path}}></shape>
+
+                       <shape id="polyline" name="polyline" 
+                      geodesic="true" stroke-color="cyan" stroke-opacity="1.0" stroke-weight="2"
+                      path={{circle[2].path}}></shape>-->
+                </map>
+              </div>
 
         <div id="status">
         	Warning - You are running in a highly polluted zone

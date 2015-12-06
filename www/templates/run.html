@@ -1,35 +1,58 @@
-<ion-view title="Run!" >
+<ion-view title="Run!"  cache-view="false">
+    <div class="bar bar-header bar-stable">
+         <a href = "#/home"class=" button icon-left ion-chevron-left button-clear">Home</a>
+      </div>
+
+
     <ion-content padding="true" class="has-header" ng-controller = "runCtrl">
     	<div id="metrics">
     		<div id="health-status">
     			<div id="health-heart-icon">
-    				74
+    				74 
     			</div>
     		</div>
+            
+
 
     		<div id="run-metrics">
-    			<div id="time" ng-init="startTimer()">
+    			<!--<div id="time" ng-init="startTimer()">
                 {{minute1}}{{minute2}}:{{second1}}{{second2}}
+                </div>-->
+                <div id = "time"><h3> <timer interval="1000">{{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}, {{seconds}} second{{secondsS}}.</timer></h3></div>
+
+    			<div id="distance" ng-init="startDistance()">
+                   Distanced travelled: {{distance}} m 
                 </div>
 
-    			<div id="distance">
-    				10,450m left
-    			</div>
-
-    			<div id="speed">
-    				13 km / h
-    			</div>
+                <div id="speed">
+                   Average speed: {{speed}} km/h
+                </div>
     		</div>
     	</div>
 
-    	<div id="map-container2">
+    	<!--<div id="map-container2">
             <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
-        </div>
+        </div>-->
+                 <div map-lazy-load="http://maps.google.com/maps/api/js">
+                <map center="current-location" zoom="15" min-zoom="8">
+                     <!-- <shape id="polyline" name="polyline" 
+                      geodesic="true" stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="2"
+                      path={{circle[0].path}}></shape>
+
+                      <shape id="polyline" name="polyline" 
+                      geodesic="true" stroke-color="blue" stroke-opacity="1.0" stroke-weight="2"
+                      path={{circle[1].path}}></shape>
+
+                       <shape id="polyline" name="polyline" 
+                      geodesic="true" stroke-color="cyan" stroke-opacity="1.0" stroke-weight="2"
+                      path={{circle[2].path}}></shape>-->
+                </map>
+              </div>
 
         <div id="status">
         	Warning - You are running in a highly polluted zone
         </div>
 
-        <a href="#/end" id="end-workout" class="button button-block button-calm">End workout</a>
+        <a href="#/end/{{distance}}/{{timeInMilis}}/8/100" id="end-workout" ng-click="stopTimer()" class="button button-block button-calm">End workout</a>
     </ion-content>
 </ion-view>

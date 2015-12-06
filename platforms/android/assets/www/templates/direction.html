@@ -37,25 +37,25 @@
             <ui-gmap-google-map center='map.center' zoom='map.zoom'></ui-gmap-google-map>
         </div>-->
          <div map-lazy-load="http://maps.google.com/maps/api/js">
-        <map center="51.5085300, -0.1257400" zoom="12">
+        <map center="current-location" zoom="13">
             <shape id="polyline" name="polyline" 
-              geodesic="true" stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="2"
+              geodesic="true" stroke-color="green" stroke-opacity="1.0" stroke-weight="2"
               path={{routes[0].path}}></shape>
 
               <shape id="polyline" name="polyline" 
-              geodesic="true" stroke-color="blue" stroke-opacity="1.0" stroke-weight="2"
+              geodesic="true" stroke-color="yellow" stroke-opacity="1.0" stroke-weight="2"
               path={{routes[1].path}}></shape>
 
                <shape id="polyline" name="polyline" 
-              geodesic="true" stroke-color="cyan" stroke-opacity="1.0" stroke-weight="2"
+              geodesic="true" stroke-color="red" stroke-opacity="1.0" stroke-weight="2"
               path={{routes[2].path}}></shape>
 
-               <shape id="polyline" name="polyline" 
-              geodesic="true" stroke-color="green" stroke-opacity="1.0" stroke-weight="2"
+              <!-- <shape id="polyline" name="polyline" 
+              geodesic="true" stroke-color="#FF0000" stroke-opacity="1.0" stroke-weight="2"
               path={{routes[3].path}}></shape>
 
                <shape id="polyline" name="polyline" 
-              geodesic="true" stroke-color="yellow" stroke-opacity="1.0" stroke-weight="2"
+              geodesic="true" stroke-color="blue" stroke-opacity="1.0" stroke-weight="2"
               path={{routes[4].path}}></shape>
 
                <shape id="polyline" name="polyline" 
@@ -76,7 +76,7 @@
 
                <shape id="polyline" name="polyline" 
               geodesic="true" stroke-color="#aa2312" stroke-opacity="1.0" stroke-weight="2"
-              path={{routes[9].path}}></shape>
+              path={{routes[9].path}}></shape>-->
 
         </map>
       </div>
@@ -89,11 +89,30 @@
         <div>lat2: {{details2.geometry.location.lat()}}</div>
         <div>long2: {{details2.geometry.location.lng()}}</div>-->
 
-        <div class="spacer" style="height: 20px;"></div>
+        <!--<div class="spacer" style="height: 20px;"></div>
         <ion-list>
             <ion-item>Route 1</ion-item>
             <ion-item>Route 2</ion-item>
             <ion-item>Route 3</ion-item>
-        </ion-list>
+        </ion-list>-->
+
+        <div id="legend">
+          <div id="legend-title">Legend</div>
+
+          <ul>
+            <li>
+                <span id="green-box" class="box"></span> Least pollution route
+            </li>
+
+            <li>
+                <span id="orange-box" class="box"></span> Route with medium pollution
+            </li>
+
+            <li>
+                <span id="red-box" class="box"></span> Most polluted route
+            </li>
+          </ul>
+        </div>
+
     </ion-content>
 </ion-view>

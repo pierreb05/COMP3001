@@ -1,35 +1,247 @@
+function startApp(){
+//workout list (30min, 1 hour etc) not in any controller
+var workoutType = [
+	{
+		id : '1',
+		name : '10km'
+	}, {
+		id :'2',
+		name : '21km'
+	}, {
+		id : '3',
+		name : '42km'
+	}, {
+		id : '4',
+		name : '30 minutes'
+	}, {
+		id : '5',
+		name : '1 hour'
+	}
+];
+
+
+//helper function
+function getWorkoutType(workoutId) {
+  for (var i = 0; i < workoutType.length; i++) {
+    if (workoutType[i].id === workoutId) {
+      return workoutType[i];
+    }
+  }
+  return undefined;
+}
+
 angular.module('app.controllers', [])
+
+
+
+
 
 .controller('homeCtrl', function($scope) {
 
 })
 
-.controller('pollutionMapCtrl', function($scope) {
+.controller('pollutionMapCtrl', function($scope, $cordovaGeolocation) {
  /*$scope.map = { center: { latitude: 51.508742, longitude: -0.120850 }, zoom: 8 };
  $scope.updateMap = function (lat, lng) {
 		$scope.map = { center: { latitude: lat, longitude: lng }, zoom: 15 };
  	}*/
-
+	var marker;
  	 $scope.$on('mapInitialized', function(event, map) {
       //map.setCenter(new google.maps.LatLng(51.5085300, -0.1257400));
       //$scope.map.setZoom(12);
-    });
+
+      
+	  var options = {timeout: 10000, enableHighAccuracy: true};
+      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+ 		
+	    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);	
+	 	 marker = new google.maps.Marker({
+			position: latLng,
+		    map: $scope.map	 
+		});
+ 
+	  	}, function(error){
+	   		console.log("Could not get location");
+	  	});
+	    });
 
  	 $scope.updateMap = function (lat, lng) {
 		$scope.map.setCenter(new google.maps.LatLng(lat, lng));
 		$scope.map.setZoom(15);
  	}
+
+
+
+ 	//TRACK COORDINATES
+	// call this once
+	setupWatch(3000);
+
+	// sets up the interval at the specified frequency
+	function setupWatch(freq) {
+	    // global var here so it can be cleared on logout (or whenever).
+	    activeWatch = setInterval(watchLocation, freq);
+	}
+
+	// this is what gets called on the interval.
+	function watchLocation() {
+	    var gcp = navigator.geolocation.getCurrentPosition(
+	            updateUserLoc, onError, {
+	                enableHighAccuracy: true
+	            });
+
+
+	    // console.log(gcp);
+
+	}
+
+	function onError(error) {
+	    alert('code: '    + error.code    + '\n' +
+	          'message: ' + error.message + '\n');
+	}
+
+
+	// do something with the results
+
+	var location;
+
+	function updateUserLoc(position) {
+
+
+	location = {
+	    lat : position.coords.latitude,
+	    lng : position.coords.longitude
+	};
+
+	console.log(location.lat);
+	console.log(location.lng);
+
+
+		//need to scope.apply or else anguarjs is unaware of the update, update every 3 seconds
+	     setTimeout(function () {
+	        $scope.$apply(function () {
+	            $scope.currentLat =  location.lat;
+				$scope.currentLng = location.lng;
+				
+				var latLng = new google.maps.LatLng(location.lat, location.lng);
+
+				//$scope.map.panTo(latLng);
+			    marker.setPosition(latLng);
+	        });
+	    }, 3000);
+
+
+	}
+
+
+
+	// stop watching
+
+	function logout() {
+	    clearInterval(activeWatch);
+	}
+
+
+
 })
 
 .controller('settingsCtrl', function($scope) {
 
 })
 
-.controller('directionCtrl', function($scope) {
+.controller('directionCtrl', function($scope,  $cordovaGeolocation) {
+
+
+var marker;	
  $scope.$on('mapInitialized', function(event, map) {
-      //map.setCenter(new google.maps.LatLng(51.5085300, -0.1257400));
-      //$scope.map.setZoom(12);
-    });
+	  	
+	  	var options = {timeout: 10000, enableHighAccuracy: true};
+       $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+ 		
+	    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);	
+	 	 marker = new google.maps.Marker({
+			position: latLng,
+		    map: $scope.map	 
+		});
+ 
+	  	}, function(error){
+	   		console.log("Could not get location");
+	  	});
+	    });
+
+
+
+  	  
+
+
+
+	//TRACK COORDINATES
+	// call this once
+	setupWatch(3000);
+
+	// sets up the interval at the specified frequency
+	function setupWatch(freq) {
+	    // global var here so it can be cleared on logout (or whenever).
+	    activeWatch = setInterval(watchLocation, freq);
+	}
+
+	// this is what gets called on the interval.
+	function watchLocation() {
+	    var gcp = navigator.geolocation.getCurrentPosition(
+	            updateUserLoc, onError, {
+	                enableHighAccuracy: true
+	            });
+
+
+	    // console.log(gcp);
+
+	}
+
+	function onError(error) {
+	    alert('code: '    + error.code    + '\n' +
+	          'message: ' + error.message + '\n');
+	}
+
+
+	// do something with the results
+
+	var location;
+
+	function updateUserLoc(position) {
+
+
+	location = {
+	    lat : position.coords.latitude,
+	    lng : position.coords.longitude
+	};
+
+	console.log(location.lat);
+	console.log(location.lng);
+
+
+		//need to scope.apply or else anguarjs is unaware of the update, update every 3 seconds
+	     setTimeout(function () {
+	        $scope.$apply(function () {
+	            $scope.currentLat =  location.lat;
+				$scope.currentLng = location.lng;
+				
+				var latLng = new google.maps.LatLng(location.lat, location.lng);
+
+				//$scope.map.panTo(latLng);
+			    marker.setPosition(latLng);
+	        });
+	    }, 3000);
+
+
+	}
+
+
+
+	// stop watching
+
+	function logout() {
+	    clearInterval(activeWatch);
+	}
+    
   
 
  	$scope.routes= [];
@@ -51,7 +263,7 @@ angular.module('app.controllers', [])
 
   	var jsonText = file_get_contents(jsonUrl);
   	var obj = JSON.parse(jsonText);
-  	console.log(obj[0].coords);
+  	//console.log(obj[0].coords);
 
 	$scope.routes= [
 	 	{
@@ -60,20 +272,6 @@ angular.module('app.controllers', [])
 	 		path: obj[1].coords
 	 	}, {
 	 		path: obj[2].coords
-	 	}, {
-	 		path: obj[3].coords
-	 	}, {
-	 		path: obj[4].coords
-	 	}, {
-	 		path: obj[5].coords
-	 	}, {
-	 		path: obj[6].coords
-	 	}, {
-	 		path: obj[7].coords
-	 	}, {
-	 		path: obj[8].coords
-	 	}, {
-	 		path: obj[9].coords
 	 	}
 	 ];
  	}
@@ -87,34 +285,144 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('recapCtrl', function($scope) {
+.controller('recapCtrl', function($scope, $state) {
 
 })
 
-.controller('runCtrl', function($scope, $timeout, $cordovaGeolocation) {
+.controller('runCtrl', function($scope, $timeout, $cordovaGeolocation, $state, $interval) {
+
+	$scope.workout = getWorkoutType($state.params.workoutId);
+
+ 	$scope.currentLat = "";
+	$scope.currentLng = "";
 
 
- 	var options = {timeout: 10000, enableHighAccuracy: true};
+	var marker;
+	var options = {timeout: 10000, enableHighAccuracy: true};
 
-    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+
+
+
+ 	 $scope.$on('mapInitialized', function(event, map) {
+	  
+      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+	    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);	
+
+
+
+	    var layer = new google.maps.FusionTablesLayer({
+		    query: {
+		       select: 'geometry',
+		        from: '1pHZ_F-xDRFU0omNrpu-SdLoVYOm0Fm5CPDdSsbab'
+		    }
+	  	});
+	  layer.setMap($scope.map);
+
+	 	 marker = new google.maps.Marker({
+			position: latLng,
+		    map: $scope.map	 
+		});
  
-    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- 
-    var mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
- 
-    $scope.map = new google.maps.Map(document.getElementById("map-container2"), mapOptions);
-    var marker = new google.maps.Marker({
-		position: latLng,
-	    map: $scope.map	 
-	 });
- 
-  }, function(error){
-    console.log("Could not get location");
-  });
+
+	    //json
+	    /*console.log(position.coords.latitude);
+	    console.log(position.coords.longitude);
+	    var jsonUrl = "http://luftwagen.herokuapp.com/api/directions_for_workout?distance=0.00909&format=json&lat="+position.coords.latitude+"&long="+position.coords.longitude;
+	    console.log(jsonUrl);
+	    var jsonText = file_get_contents(jsonUrl);
+	    var obj = JSON.parse(jsonText);
+  		//console.log(obj[0].coords);
+  		$scope.circle= [
+	 	{
+	 		path: obj[0].coords
+	 	}, {
+	 		path: obj[1].coords
+	 	}, {
+	 		path: obj[2].coords
+	 	}	
+	 ];*/
+
+
+		
+	  	}, function(error){
+	   		console.log("Could not get location");
+	  	});
+	    });
+
+
+
+  	  
+
+
+
+	//TRACK COORDINATES
+	// call this once
+	setupWatch(3000);
+
+	// sets up the interval at the specified frequency
+	function setupWatch(freq) {
+	    // global var here so it can be cleared on logout (or whenever).
+	    activeWatch = setInterval(watchLocation, freq);
+	}
+
+	// this is what gets called on the interval.
+	function watchLocation() {
+	    var gcp = navigator.geolocation.getCurrentPosition(
+	            updateUserLoc, onError, {
+	                enableHighAccuracy: true
+	            });
+
+
+	    // console.log(gcp);
+
+	}
+
+	function onError(error) {
+	    alert('code: '    + error.code    + '\n' +
+	          'message: ' + error.message + '\n');
+	}
+
+
+	// do something with the results
+
+	var location;
+
+	function updateUserLoc(position) {
+
+
+	location = {
+	    lat : position.coords.latitude,
+	    lng : position.coords.longitude
+	};
+
+	console.log(location.lat);
+	console.log(location.lng);
+
+
+		//need to scope.apply or else anguarjs is unaware of the update, update every 3 seconds
+	     //setTimeout(function () {
+	        $scope.$apply(function () {
+	            $scope.currentLat =  location.lat;
+				$scope.currentLng = location.lng;
+				
+				var latLng = new google.maps.LatLng(location.lat, location.lng);
+
+				//$scope.map.panTo(latLng);
+			    marker.setPosition(latLng);
+	        });
+	    //}, 3000);
+
+
+	}
+
+
+
+	// stop watching
+
+	function logout() {
+	    clearInterval(activeWatch);
+	}
 
 
 
@@ -149,89 +457,278 @@ angular.module('app.controllers', [])
     $scope.startTimer = function() {
         mytimeout = $timeout($scope.onTimeout, 1000);
     };
+    $scope.getLocation = function() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition($scope.showPosition);
+        } else {
+            alert('Error');
+        }
+    }
+
+
+
+
+    var i = 0;
+    var mydistance = null;
+    var distance;
+    var lat1, lat2, lon1, lon2;
+    $scope.showPosition = function(position){
+        if (i == 0){
+            distance = 0;
+            lat1 =  position.coords.latitude;
+            lon1 =  position.coords.longitude;
+        }
+        else {
+            lat2 = lat1;
+            lon2 = lon1;
+            lat1 = position.coords.latitude;
+            lon1 = position.coords.longitude;
+            distance += $scope.getDistance(lat1, lon1, lat2, lon2);
+        }
+        $scope.distance = distance.toPrecision(4);
+        i++;
+        //console.log(distance);
+        mydistance = $timeout($scope.getLocation, 1000);
+    }
+    $scope.startDistance = function(){
+        mydistance = $timeout($scope.getLocation, 1000);
+    };
+    
+    $scope.getDistance = function(lat1, lon1, lat2, lon2){
+        var p = 0.017453292519943295;    // Math.PI / 180
+        var c = Math.cos;
+        var a = 0.5 - c((lat2 - lat1) * p)/2 + c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))/2;
+        return 12742000 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km  
+    };
+
+
+
+
+
+ 	// store the interval promise in this variable
+    var promise;
+  
+    // simulated items array
+    $scope.items = [];
+    
+    // starts the interval
+    $scope.start = function() {
+      // stops any running interval to avoid two intervals running at the same time
+      $scope.stop(); 
+      
+      // store the interval promise
+      promise = $interval(checkWorkout, 1000);
+    };
+  
+    // stops the interval
+    $scope.stop = function() {
+      $interval.cancel(promise);
+    };
+  
+    // starting the interval by default
+    $scope.start();
+ 
+    // stops the interval when the scope is destroyed,
+    // this usually happens when a route is changed and 
+    // the ItemsController $scope gets destroyed. The
+    // destruction of the ItemsController scope does not
+    // guarantee the stopping of any intervals, you must
+    // be responsible of stopping it when the scope is
+    // is destroyed.
+    $scope.$on('$destroy', function() {
+      $scope.stop();
+    });
+
+
+
+
+
+     function checkWorkout() {
+    	console.log($scope.workout.id);
+        switch($scope.workout.id){
+	    	case '1':
+	    		//console.log("distance"+$scope.distance);
+	    		if($scope.distance >= 10000){
+	    			$state.go('recap');
+	    			logout();
+	    		}
+	    		break;
+	    	case '2':
+	    		if($scope.distance >= 21000){
+	    			$state.go('recap');
+	    			logout();
+	    		}
+	    		break;
+	    	case '3':
+	    		if($scope.distance >= 42000){
+	    			$state.go('recap');
+	    			logout();
+	    		}
+	    		break;
+	    	case '4':
+	    		if($scope.minute1>= 3){
+	    			$state.go('recap');
+	    			logout();
+	    		}
+	    		break;
+	    	case '5':
+	    		if($scope.minute1 >= 6){
+	    			$state.go('recap');
+	    			logout();
+	    		}
+	    		break;
+		}
+	   };
+    
     
 })
 
-.controller('workoutDetailCtrl', function($scope, $cordovaGeolocation) {
-
-	/*$scope.map = { center: { latitude: 51.5085300, longitude: -0.1257400 }, zoom: 8 };
-	   $scope.$on('$ionicView.enter', function(){
-        var pos;
-        if(!!navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {        
-            pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            });
-        var mapOptions = {
-            zoom: 14,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        };        
 
 
 
-        var map = new google.maps.Map(document.getElementById('map-container'), mapOptions);       
 
-        navigator.geolocation.getCurrentPosition(function(position) {        
-            var geolocate = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);            
-            map.setCenter(geolocate);
-            var marker = new google.maps.Marker({
-            position: geolocate,
-            map: map,
-        });
-    });
-        
-    } 
-    else {
-       document.alert("No maps support")
-    }
-    });*/
 
+
+
+.controller('workoutDetailCtrl', function($scope, $cordovaGeolocation, $state) {
+
+	$scope.workout = getWorkoutType($state.params.workoutId);
+
+
+	$scope.currentLat = "";
+	$scope.currentLng = "";
+
+
+	var marker;
 	var options = {timeout: 10000, enableHighAccuracy: true};
 
-    $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+
+
+
+ 	 $scope.$on('mapInitialized', function(event, map) {
+	  
+      $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+	    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);	
+
+
+
+	    var layer = new google.maps.FusionTablesLayer({
+		    query: {
+		       select: 'geometry',
+		        from: '1pHZ_F-xDRFU0omNrpu-SdLoVYOm0Fm5CPDdSsbab'
+		    }
+	  	});
+	  layer.setMap($scope.map);
+
+	 	 marker = new google.maps.Marker({
+			position: latLng,
+		    map: $scope.map	 
+		});
  
-    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
- 
-    var mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
- 
-    $scope.map = new google.maps.Map(document.getElementById("map-container"), mapOptions);
 
-    var marker = new google.maps.Marker({
-		position: latLng,
-	    map: $scope.map	 
-	 });
- 
-  	}, function(error){
-   		console.log("Could not get location");
-  	});
+	    //json
+	   /* console.log(position.coords.latitude);
+	    console.log(position.coords.longitude);
+	    var jsonUrl = "http://luftwagen.herokuapp.com/api/directions_for_workout?distance=0.00909&format=json&lat="+position.coords.latitude+"&long="+position.coords.longitude;
+	    console.log(jsonUrl);
+	    var jsonText = file_get_contents(jsonUrl);
+	    var obj = JSON.parse(jsonText);
+  		//console.log(obj[0].coords);
+  		$scope.circle= [
+	 	{
+	 		path: obj[0].coords
+	 	}, {
+	 		path: obj[1].coords
+	 	}, {
+	 		path: obj[2].coords
+	 	}	
+	 ];*/
 
-  	// onSuccess Callback
-//   This method accepts a `Position` object, which contains
-//   the current GPS coordinates
-//
-function onSuccess(position) {
-    var element = document.getElementById('geolocation');
-    element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
-                        'Longitude: ' + position.coords.longitude     + '<br />' +
-                        '<hr />'      + element.innerHTML;
-}
 
-// onError Callback receives a PositionError object
-//
-function onError(error) {
-    alert('code: '    + error.code    + '\n' +
-          'message: ' + error.message + '\n');
-}
+		
+	  	}, function(error){
+	   		console.log("Could not get location");
+	  	});
+	    });
 
-// Options: throw an error if no update is received every 30 seconds.
-//
-var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+  
 
-	
-	
+
+  	  
+
+
+
+	//TRACK COORDINATES
+	// call this once
+	setupWatch(3000);
+
+	// sets up the interval at the specified frequency
+	function setupWatch(freq) {
+	    // global var here so it can be cleared on logout (or whenever).
+	    activeWatch = setInterval(watchLocation, freq);
+	}
+
+	// this is what gets called on the interval.
+	function watchLocation() {
+	    var gcp = navigator.geolocation.getCurrentPosition(
+	            updateUserLoc, onError, {
+	                enableHighAccuracy: true
+	            });
+
+
+	    // console.log(gcp);
+
+	}
+
+	function onError(error) {
+	    alert('code: '    + error.code    + '\n' +
+	          'message: ' + error.message + '\n');
+	}
+
+
+	// do something with the results
+
+	function updateUserLoc(position) {
+
+
+	var location = {
+	    lat : position.coords.latitude,
+	    lng : position.coords.longitude
+	};
+
+	console.log(location.lat);
+	console.log(location.lng);
+
+
+		//need to scope.apply or else anguarjs is unaware of the update, update every 3 seconds
+	     setTimeout(function () {
+	        $scope.$apply(function () {
+	            $scope.currentLat =  location.lat;
+				$scope.currentLng = location.lng;
+				
+				var latLng = new google.maps.LatLng(location.lat, location.lng);
+
+				//$scope.map.panTo(latLng);
+			    marker.setPosition(latLng);
+	        });
+	    }, 3000);
+
+
+	}
+
+
+
+	// stop watching
+
+	function logout() {
+	    clearInterval(activeWatch);
+	}
+
+		
 })
 
 
+
+}
+startApp();

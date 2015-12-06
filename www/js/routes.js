@@ -23,7 +23,7 @@ angular.module('app.routes', [])
     .state('pollutionMap', {
       url: '/pollutionmap',
       templateUrl: 'templates/pollutionMap.html',
-      controller: 'pollutionMapCtrl'
+      
     })
         
       
@@ -43,7 +43,7 @@ angular.module('app.routes', [])
     .state('direction', {
       url: '/direction',
       templateUrl: 'templates/direction.html',
-      controller: 'directionCtrl'
+     
     })
         
       
@@ -61,29 +61,29 @@ angular.module('app.routes', [])
       
         
     .state('customWorkout', {
-      url: '/customworkout',
+      url: '/customworkout/:workoutId',
       templateUrl: 'templates/customWorkout.html',
-      controller: 'customWorkoutCtrl'
+      
     })
         
       
     .state('run', {
-      url: '/run',
+      url: '/run/:workoutId',
       templateUrl: 'templates/run.html',
-      controller: 'runCtrl'
+      
     })
 
     .state('recap', {
-      url: '/end',
+      url: '/end/:distance/:time/:speed/:health',
       templateUrl: 'templates/recap.html',
       controller: 'recapCtrl'
     })
       
         
     .state('workoutDetail', {
-      url: '/detail',
+      url: '/detail/:workoutId',
       templateUrl: 'templates/workoutDetail.html',
-      controller: 'workoutDetailCtrl'
+      
     })
         
       

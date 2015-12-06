@@ -1,26 +1,41 @@
-<ion-view title="Custom Workout">
-    <ion-content padding="true" class="has-header">
+<ion-view title="Custom Workout" >
+
+    <div class="bar bar-header bar-stable">
+         <a href = "#/newworkout"class=" button icon-left ion-chevron-left button-clear">Select Workout</a>
+      </div>
+
+    <ion-content padding="true" class="has-header" ng-controller = "customWorkoutCtrl">
         <div id="custom-workout-header">
             <img src="/img/custom.png">
         </div>
         <form class="list">
             <label class="item item-input item-select">
-                <span class="input-label">Categories</span>
-                <select>
-                    <option>Time</option>
-                    <option>Distance</option>
+                <span class="input-label">Category</span>
+                <select id = "type" data-ng-change="changeFields()" ng-model="type">
+                    <option value = "Time" name = "Time" selected="selected">Time</option>
+                    <option value = "Distance" name = "Distance">Distance</option>
                 </select>
                 
             </label>
         </form>
         <form class="list">
-            <label class="item item-input">
-                <span class="input-label">Time</span>
-                <input type="time" value="00:00">
+
+
+            <label class="item item-input item-stacked-label" ng-if = "type == 'Distance'">
+              <span class="input-label">How many kilometres</span>
+              <input id = "dist" ng-model = "workout.value " type="number" ng-disabled="disableDistance">
             </label>
+
+            <label class="item item-input item-stacked-label" ng-if = "type == 'Time'">
+              <span class="input-label">How many minutes</span>
+              <input class="" id = "time2" ng-model = "workout.value" type="number" ng-disabled="disableTime">
+            </label>
+
+            
+           
         </form>
 
-        <a class="button button-block button-calm" href="#/detail">
+        <a ng-if = "type != null" class="button button-block button-calm" href="#/detail/6" ng-click = "submit()" >
             Continue</a>
     </ion-content>
 </ion-view>

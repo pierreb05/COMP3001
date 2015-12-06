@@ -4,21 +4,33 @@
          <a href = "#/home"class=" button icon-left ion-chevron-left button-clear">Home</a>
       </div>
 
+
+
       <ion-content padding="true" class="has-header" ng-controller = "pollutionMapCtrl">
         
+
+
+
+
         <form name = "placeForm" novalidate >         
-        <div class = "form-group" >               
+        <div class = "form-group" >           
+
+         
+           <!--<ion-google-place placeholder="Enter an address, Apt# and ZIP" ng-model="location" geocode-options="geocodeOptions"/>-->
+
           <label class="item item-input" id="address-input" >
                   <i class="icon ion-search placeholder-icon"></i>
-                   <input name = "address" placeholder = "Enter area" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1" options = "options1" required>
+                   <!--<input name = "address" placeholder = "Enter area" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1" options = "options1" required>-->
+                    <input name = "address" type="text" g-places-autocomplete ng-model="details1" placeholder = "Enter area" force-selection="true" options = "autocompleteOptions" required/>
           </label>
+
 
            <button class = "button button-block button-assertive" ng-show="placeForm.address.$error.required && placeForm.address.$touched" disabled>Please enter a valid location.</button>  
 
 
         </div>
-
-                
+        <!--aa{{location.geometry.location.lat()}}
+        bb {{location.geometry.location.lng()}}-->
 
         <!--<div>result: {{result1}}</div>
         <div>lat: {{details1.geometry.location.lat()}}</div>
@@ -31,7 +43,7 @@
         </div>-->
 
         <!-- -->
-        <div map-lazy-load="http://maps.google.com/maps/api/js">
+        <div map-lazy-load="http://maps.google.com/maps/api/js" >
         <map center="current-location" zoom="15" min-zoom="8">
           <fusion-tables-layer query="{
             select: 'geometry',
@@ -44,7 +56,7 @@
           </marker>-->
         </map>
       </div>
-
+      <button  type = "submit" class = "button button-positive button-block" ng-click = "centerMap()">Center map on my location</button>
 
         <div id="legend">
           <div id="legend-title">Legend</div>

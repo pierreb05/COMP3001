@@ -1,21 +1,37 @@
 function startApp(){
 //workout list (30min, 1 hour etc) not in any controller
+var custom;
 var workoutType = [
 	{
 		id : '1',
-		name : '10km'
+		name : '10km',
+		type: 'd',
+		value: 10
 	}, {
 		id :'2',
-		name : '21km'
+		name : '21km',
+		type: 'd',
+		value: 21
 	}, {
 		id : '3',
-		name : '42km'
+		name : '42km',
+		type: 'd',
+		value: 42
 	}, {
 		id : '4',
-		name : '30 minutes'
+		name : '30 minutes',
+		type: 't',
+		value: 30
 	}, {
 		id : '5',
-		name : '1 hour'
+		name : '1 hour',
+		type: 't',
+		value: 60
+	}, {
+		id : '6',
+		name : '',
+		type: '',
+		value: ''
 	}
 ];
 
@@ -45,6 +61,9 @@ angular.module('app.controllers', [])
  $scope.updateMap = function (lat, lng) {
 		$scope.map = { center: { latitude: lat, longitude: lng }, zoom: 15 };
  	}*/
+
+ 	
+ 	
 	var marker;
  	 $scope.$on('mapInitialized', function(event, map) {
       //map.setCenter(new google.maps.LatLng(51.5085300, -0.1257400));
@@ -62,6 +81,7 @@ angular.module('app.controllers', [])
  
 	  	}, function(error){
 	   		console.log("Could not get location");
+	   		console.log(error);
 	  	});
 	    });
 
@@ -165,6 +185,7 @@ var marker;
  
 	  	}, function(error){
 	   		console.log("Could not get location");
+	   		console.log(error);
 	  	});
 	    });
 
@@ -281,12 +302,52 @@ var marker;
 
 })
 
-.controller('customWorkoutCtrl', function($scope) {
+.controller('customWorkoutCtrl', function($scope, $state) {
+
+	$scope.workout = getWorkoutType($state.params.workoutId);
+
+	$scope.disableTime = true;
+    $scope.disableDistance = true;
+
+
+	$scope.changeFields = function() {
+    if($scope.type == "Time") {
+         $scope.disableDistance = true;
+         $scope.disableTime = false;
+         workoutType[5].type = 't';
+    } else if($scope.type == "Distance") {
+         $scope.disableTime = true;
+         $scope.disableDistance = false;
+         workoutType[5].type = 'd';
+    } else {
+    	$scope.disableTime = true;
+        $scope.disableDistance = true;
+    }
+	};
+
+	$scope.submit = function(){
+		if($scope.type == "Time") {
+         	workoutType[5].name = workoutType[5].value  + " minutes";
+	    } else if($scope.type == "Distance") {
+	    	workoutType[5].name = workoutType[5].value  + " km";
+	    }
+	};
+
 
 })
 
-.controller('recapCtrl', function($scope, $state) {
 
+
+
+.controller('recapCtrl', function($scope, $state) {
+	$scope.timeMs = $state.params.time;
+	$scope.distance = $state.params.distance;
+	$scope.speed = $state.params.speed;
+	$scope.health = $state.params.health;
+
+	$scope.timeSeconds = Math.floor($scope.timeMs/1000);
+	$scope.timeMinutes = Math.floor($scope.timeMs/60000);
+	$scope.timeHours = Math.floor($scope.timeMs/3600000);
 })
 
 .controller('runCtrl', function($scope, $timeout, $cordovaGeolocation, $state, $interval) {
@@ -295,7 +356,7 @@ var marker;
 
  	$scope.currentLat = "";
 	$scope.currentLng = "";
-
+	$scope.timeInMilis = "";
 
 	var marker;
 	var options = {timeout: 10000, enableHighAccuracy: true};
@@ -347,6 +408,7 @@ var marker;
 		
 	  	}, function(error){
 	   		console.log("Could not get location");
+	   		console.log(error);
 	  	});
 	    });
 
@@ -425,10 +487,26 @@ var marker;
 	}
 
 
+	 $scope.timerRunning = true;
+ 
+    $scope.startTimer = function (){
+        $scope.$broadcast('timer-start');
+        $scope.timerRunning = true;
+      //console.log(222);
+    };
+
+    $scope.stopTimer = function (){
+        $scope.$broadcast('timer-stop');
+        $scope.timerRunning = false;
+    };
+
+    $scope.$on('timer-stopped', function (event, data){
+    	$scope.timeInMilis = data.millis;
+        console.log('Timer Stopped - data = ', data);
+    });
 
 
-
-    $scope.minute1 = 0; $scope.minute2= 0, $scope.second1 = 0, $scope.second2 = 0;
+    /*$scope.minute1 = 0; $scope.minute2= 0, $scope.second1 = 0, $scope.second2 = 0, $scope.hour1 = 0;
     var mytimeout = null;
     $scope.onTimeout = function() {
         if($scope.minute1 ==  5 && $scope.minute2 == 9 && $scope.second1 == 5 && $scope.second2 == 9) {
@@ -436,7 +514,13 @@ var marker;
             $timeout.cancel(mytimeout);
             return;
         }
-        else if ($scope.minute2 == 5 && $scope.second1 == 5 && $scope.second2 == 9){
+        else if ($scope.minute1 == 5 && $scope.minute2 == 9 && $scope.second1 == 5 && $scope.second2 == 9){
+            $scope.second1 = 0;
+            $scope.second2 = 0;
+            $scope.minute2 = 0;
+            $scope.minute1 = 0;
+            $scope.hour2++;
+        } else if ($scope.minute2 == 9 && $scope.second1 == 5 && $scope.second2 == 9){
             $scope.second1 = 0;
             $scope.second2 = 0;
             $scope.minute2 = 0;
@@ -456,7 +540,7 @@ var marker;
     };
     $scope.startTimer = function() {
         mytimeout = $timeout($scope.onTimeout, 1000);
-    };
+    };*/
     $scope.getLocation = function() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition($scope.showPosition);
@@ -485,7 +569,7 @@ var marker;
             lon1 = position.coords.longitude;
             distance += $scope.getDistance(lat1, lon1, lat2, lon2);
         }
-        $scope.distance = distance.toPrecision(4);
+        $scope.distance = distance.toFixed(1);
         i++;
         //console.log(distance);
         mydistance = $timeout($scope.getLocation, 1000);
@@ -498,13 +582,14 @@ var marker;
         var p = 0.017453292519943295;    // Math.PI / 180
         var c = Math.cos;
         var a = 0.5 - c((lat2 - lat1) * p)/2 + c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p))/2;
-        return 12742000 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km  
+        var result = 12742000 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km  
+        return (result);//1 d.p
     };
 
 
 
 
-
+    //------CODE FOR CHECKING THE TIME/DISTANCE ETC------------------------------
  	// store the interval promise in this variable
     var promise;
   
@@ -539,44 +624,124 @@ var marker;
       $scope.stop();
     });
 
+    //format h = hour, m = minutes, s= seconds
+    function timeToMs(number, format){
+    	if(format == "m"){
+    		return number * 60000;
+    	} else if(format == "s"){
+    		return number * 1000;
+    	} if(format == "h"){
+    		return number * 3600000;
+    	}
+    	
+    }
 
-
-
-
+    $scope.speed = "";
      function checkWorkout() {
+     	//calculate speed here
+     	$scope.$on('timer-tick', function (event, data) {
+			dist = $scope.distance; 
+		    if ($scope.timerRunning === true) {
+		    	$scope.speed = (dist/1000) / (data.millis/3600000);
+		    }
+		});
+     	//var speed = ;
+     	$scope.speed = parseFloat($scope.speed).toPrecision(2);
+     	var speed =  $scope.speed;
+
     	console.log($scope.workout.id);
         switch($scope.workout.id){
 	    	case '1':
-	    		//console.log("distance"+$scope.distance);
+	    		var dist = $scope.distance;
 	    		if($scope.distance >= 10000){
-	    			$state.go('recap');
-	    			logout();
-	    		}
+	    			$scope.$on('timer-tick', function (event, data) {
+	    				if ($scope.timerRunning === true) {
+					        $scope.$broadcast('timer-stop');
+					        $state.go('recap', { distance: dist, time: data.millis, speed: speed, health: 4 });
+		    				logout();
+					    }
+	    			});
+				   }	    		
 	    		break;
 	    	case '2':
+	    		var dist = $scope.distance;
 	    		if($scope.distance >= 21000){
-	    			$state.go('recap');
-	    			logout();
-	    		}
+	    			$scope.$on('timer-tick', function (event, data) {
+	    				if ($scope.timerRunning === true) {
+					        $scope.$broadcast('timer-stop');
+					        $state.go('recap', { distance: dist, time: data.millis, speed: speed, health: 4 });
+		    				logout();
+					    }
+	    				});
+				    }
+	    		
 	    		break;
 	    	case '3':
+	    		var dist = $scope.distance;
 	    		if($scope.distance >= 42000){
-	    			$state.go('recap');
-	    			logout();
-	    		}
+	    			$scope.$on('timer-tick', function (event, data) {
+	    				if ($scope.timerRunning === true) {
+					        $scope.$broadcast('timer-stop');
+					        $state.go('recap', { distance: dist, time: data.millis, speed: speed, health: 4 });
+		    				logout();
+					    }
+	    				});
+				    }
+	    		
 	    		break;
 	    	case '4':
-	    		if($scope.minute1>= 3){
-	    			$state.go('recap');
-	    			logout();
-	    		}
+	    		var dist = $scope.distance;
+	    		
+	    		$scope.$on('timer-tick', function (event, data) {
+	    			dist = $scope.distance; 
+				    if ($scope.timerRunning === true && data.millis >= timeToMs(30,'m')) {
+				        $scope.$broadcast('timer-stop');
+				        console.log(dist);
+				        $state.go('recap', { distance: dist, time: data.millis, speed: speed, health: 4 });
+	    				logout();
+				    }
+				});
+
+	    		//if ($scope.timerRunning === true && data.millis >= 5000){   			
+	    		//}
 	    		break;
 	    	case '5':
-	    		if($scope.minute1 >= 6){
-	    			$state.go('recap');
-	    			logout();
-	    		}
+	    		var dist = $scope.distance;
+	    		$scope.$on('timer-tick', function (event, data) {
+				    if ($scope.timerRunning === true && data.millis >= timeToMs(60, 'm')) {
+				        $scope.$broadcast('timer-stop');
+				       $state.go('recap', { distance: dist, time: data.millis, speed: speed, health: 4 });
+	    				logout();
+				    }
+				});
 	    		break;
+
+	    	case '6':
+	    		var dist = $scope.distance;
+	    		//custom
+	    		if($scope.workout.type == 't'){
+	    			console.log("ttttt  "+ $scope.workout.value * 1000);
+	    			$scope.$on('timer-tick', function (event, data) {
+					    if ($scope.timerRunning === true && data.millis >= timeToMs($scope.workout.value, 'm')) {
+					        $scope.$broadcast('timer-stop');
+					        $state.go('recap', { distance: dist, time: data.millis, speed: speed, health: 4 });
+		    				logout();
+					    }
+					});
+	    		} else {
+	    			console.log("66666  "+ $scope.workout.value * 1000);
+	    			if($scope.distance >= ($scope.workout.value * 1000)){
+		    			$scope.$on('timer-tick', function (event, data) {
+						    if ($scope.timerRunning === true) {
+						        $scope.$broadcast('timer-stop');
+						        $state.go('recap', { distance: dist, time: data.millis, speed: speed, health: 4 });
+			    				logout();
+						    }
+					});
+		    		}
+	    		}
+	    		
+	    		break;	
 		}
 	   };
     
@@ -649,6 +814,7 @@ var marker;
 		
 	  	}, function(error){
 	   		console.log("Could not get location");
+	   		console.log(error);
 	  	});
 	    });
 

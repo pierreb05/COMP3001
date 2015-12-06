@@ -1,4 +1,9 @@
 <ion-view title="Run!"  cache-view="false">
+    <div class="bar bar-header bar-stable">
+         <a href = "#/home"class=" button icon-left ion-chevron-left button-clear">Home</a>
+      </div>
+
+
     <ion-content padding="true" class="has-header" ng-controller = "runCtrl">
     	<div id="metrics">
     		<div id="health-status">
@@ -6,18 +11,21 @@
     				74 
     			</div>
     		</div>
+            
+
 
     		<div id="run-metrics">
-    			<div id="time" ng-init="startTimer()">
+    			<!--<div id="time" ng-init="startTimer()">
                 {{minute1}}{{minute2}}:{{second1}}{{second2}}
-                </div>
+                </div>-->
+                <div id = "time"><h3> <timer interval="1000">{{hours}} hour{{hoursS}}, {{minutes}} minute{{minutesS}}, {{seconds}} second{{secondsS}}.</timer></h3></div>
 
     			<div id="distance" ng-init="startDistance()">
-                    {{distance}} m past
+                   Distanced travelled: {{distance}} m 
                 </div>
 
                 <div id="speed">
-                    {{speed}} km/h
+                   Average speed: {{speed}} km/h
                 </div>
     		</div>
     	</div>
@@ -45,6 +53,6 @@
         	Warning - You are running in a highly polluted zone
         </div>
 
-        <a href="#/end" id="end-workout" class="button button-block button-calm">End workout</a>
+        <a href="#/end/{{distance}}/{{timeInMilis}}/{{speed}}/100" id="end-workout" ng-click="stopTimer()" class="button button-block button-calm">End workout</a>
     </ion-content>
 </ion-view>

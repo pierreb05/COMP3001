@@ -8,7 +8,7 @@
     	<div id="metrics">
     		<div id="health-status">
     			<div id="health-heart-icon">
-    				74 
+    				{{health}}
     			</div>
     		</div>
             
@@ -50,11 +50,11 @@
               </div>
 
         <div id="status">
-        	Warning - You are running in a highly polluted zone
+        	{{pollutionText}}
         </div>
 
         <button  type = "submit" class = "button button-positive button-block" ng-click = "centerMap()">Center map on my location</button>
 
-        <a href="#/end/{{distance}}/{{timeInMilis}}/{{speed}}/100" id="end-workout" ng-click="stopTimer()" class="button button-block button-calm">End workout</a>
+        <a href="#/end/{{distance}}/{{timeInMilis}}/{{speed}}/{{health}}" id="end-workout" ng-click="stopTimer()" class="button button-block button-calm">End workout</a>
     </ion-content>
 </ion-view>

@@ -46,6 +46,48 @@ function getWorkoutType(workoutId) {
   return undefined;
 }
 
+function checkPollution(lat, lng){
+	var jsonUrl = "http://luftwagen.herokuapp.com/api/pollution?format=json&lat="+lat+"+&long="+lng;
+	console.log(jsonUrl);
+  	var jsonText = file_get_contents(jsonUrl);
+  	var obj = JSON.parse(jsonText);
+  	console.log(obj.pollution);
+
+
+  	if(obj.pollution < 90){
+  		return {
+  			"text": "You are in a low polluted zone",
+  			"value": obj.pollution
+  		};
+  	} else if (obj.pollution < 125){
+  		return {
+  			"text": "You are in a medium polluted zone",
+  			"value": obj.pollution
+  		};
+  		
+  	} else {
+  		return {
+  			"text": "You are in a high polluted zone!",
+  			"value": obj.pollution
+  		};
+  		
+  	}
+
+}
+
+function changeHealth(currentHealth, pollutionValue)
+{
+	// < 125 = heal, >=125 take damage
+	var newHealth = (currentHealth -((currentHealth-125)/75)).toFixed(2);
+	if (newHealth >= 100){
+		newHealth = 100;
+	}
+	return newHealth;
+}
+
+
+
+
 angular.module('app.controllers', [])
 
 
@@ -57,6 +99,15 @@ angular.module('app.controllers', [])
 })
 
 .controller('pollutionMapCtrl', function($scope, $cordovaGeolocation) {
+
+$scope.$on('$stateChangeStart', 
+             function(event, toState, toParams, fromState, fromParams){ 
+    			//$ionicLoading.show();
+    			console.log("sadadsasa");
+    			logout();
+  		});
+
+
  /*$scope.map = { center: { latitude: 51.508742, longitude: -0.120850 }, zoom: 8 };
  $scope.updateMap = function (lat, lng) {
 		$scope.map = { center: { latitude: lat, longitude: lng }, zoom: 15 };
@@ -179,6 +230,15 @@ angular.module('app.controllers', [])
 })
 
 .controller('directionCtrl', function($scope,  $cordovaGeolocation) {
+
+$scope.$on('$stateChangeStart', 
+             function(event, toState, toParams, fromState, fromParams){ 
+    			//$ionicLoading.show();
+    			console.log("sadadsasa");
+    			logout();
+  		});
+
+	
 
 $scope.autocompleteOptions = {
     componentRestrictions: { country: 'uk' },
@@ -308,6 +368,11 @@ var marker;
   	var obj = JSON.parse(jsonText);
   	//console.log(obj[0].coords);
 
+
+	$scope.map.setCenter(new google.maps.LatLng(lat1, lng1));
+	$scope.map.setZoom(13);
+ 	
+
 	$scope.routes= [
 	 	{
 	 		path: obj[0].coords
@@ -374,11 +439,22 @@ var marker;
 
 .controller('runCtrl', function($scope, $timeout, $cordovaGeolocation, $state, $interval) {
 
+	$scope.$on('$stateChangeStart', 
+             function(event, toState, toParams, fromState, fromParams){ 
+    			//$ionicLoading.show();
+    			console.log("sadadsasa");
+    			logout();
+  		});
+
+	$scope.pollutionText = "Calculating pollution levels...";
+
+
 	$scope.workout = getWorkoutType($state.params.workoutId);
 
  	$scope.currentLat = "";
 	$scope.currentLng = "";
 	$scope.timeInMilis = "";
+	$scope.health = 100;
 
 	var marker;
 	var options = {timeout: 10000, enableHighAccuracy: true};
@@ -497,8 +573,10 @@ var marker;
 			    marker.setPosition(latLng);
 	        });
 	    //}, 3000);
-
-
+		var pollutionData = checkPollution(location.lat, location.lng);
+	    $scope.pollutionText = pollutionData["text"];
+	    $scope.health = changeHealth($scope.health, pollutionData["value"]);
+	
 	}
 
 
@@ -671,7 +749,7 @@ var marker;
      	$scope.$on('timer-tick', function (event, data) {
 			dist = $scope.distance; 
 		    if ($scope.timerRunning === true) {
-		    	$scope.speed = (dist/1000) / (data.millis/3600000);
+		    	$scope.speed = ((dist/1000) / (data.millis/3600000)).toPrecision(2);
 		    }
 		});
      	//var speed = ;
@@ -785,10 +863,25 @@ var marker;
 
 
 .controller('workoutDetailCtrl', function($scope, $cordovaGeolocation, $state) {
+	console.log("det");
+
+	//ionic view lifecycle needs controller to be at ion-view instead of ion-content but google maps wont work
+	/*$scope.$on('$ionicView.leave', function() {
+	    console.log('leave.');
+	    
+	  });*/
+	
+	//statemanager angular (different from ionic view lifecycle)
+	$scope.$on('$stateChangeStart', 
+             function(event, toState, toParams, fromState, fromParams){ 
+    			//$ionicLoading.show();
+    			console.log("sadadsasa");
+    			logout();
+  		});
 
 	$scope.workout = getWorkoutType($state.params.workoutId);
 
-
+	$scope.pollutionText = "Calculating pollution levels...";
 	$scope.currentLat = "";
 	$scope.currentLng = "";
 
@@ -897,7 +990,7 @@ var marker;
 
 
 		//need to scope.apply or else anguarjs is unaware of the update, update every 3 seconds
-	     setTimeout(function () {
+	     //setTimeout(function () {
 	        $scope.$apply(function () {
 	            $scope.currentLat =  location.lat;
 				$scope.currentLng = location.lng;
@@ -907,9 +1000,10 @@ var marker;
 				//$scope.map.panTo(latLng);
 			    marker.setPosition(latLng);
 	        });
-	    }, 3000);
+	    //}, 3000);
 
-
+	     var pollutionData = checkPollution(location.lat, location.lng);
+	     $scope.pollutionText = pollutionData["text"];
 	}
 
 

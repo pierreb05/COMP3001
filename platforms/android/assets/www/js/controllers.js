@@ -406,6 +406,30 @@ var marker;
 	 	}
 	 ];
  	}
+
+
+ 	$scope.locationADisabled = true;
+    $scope.locationBDisabled = true;
+
+
+	$scope.changeFields = function() {
+    if($scope.type == "Time") {
+         $scope.disableDistance = true;
+         $scope.disableTime = false;
+         workoutType[5].type = 't';
+    } else if($scope.type == "Distance") {
+         $scope.disableTime = true;
+         $scope.disableDistance = false;
+         workoutType[5].type = 'd';
+    } else {
+    	$scope.disableTime = true;
+        $scope.disableDistance = true;
+    }
+	};
+
+
+
+
 })
 
 .controller('newWorkoutCtrl', function($scope) {

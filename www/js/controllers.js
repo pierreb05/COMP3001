@@ -261,6 +261,26 @@ $scope.$on('$stateChangeStart',
     			logout();
   		});
 
+$scope.locationADisabled = false;
+$scope.locationBDisabled = false;
+
+$scope.chooseCurrentLocationA = function(){
+	$scope.locationADisabled = true;
+};
+
+$scope.chooseCurrentLocationA = function(){
+	console.log("sds");
+	alert("asda");
+	$scope.locationBDisabled = true;
+};
+
+
+
+
+
+
+
+
 	
 
 $scope.autocompleteOptions = {
@@ -406,6 +426,15 @@ var marker;
 	 	}
 	 ];
  	}
+
+
+ 	
+
+
+
+
+
+
 })
 
 .controller('newWorkoutCtrl', function($scope) {

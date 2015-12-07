@@ -11,15 +11,18 @@
             <label class="item item-input">
               <span class="input-label">A</span>
               <!--<input name = "start" placeholder = "Enter start location" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result1" details = "details1" required>-->
-              <input name = "start" type="text" g-places-autocomplete ng-model="details1" placeholder = "Enter start location" options = "autocompleteOptions" force-selection="true" required/>
+              <input name = "start" type="text" g-places-autocomplete ng-model="details1" placeholder = "Enter start location" options = "autocompleteOptions" force-selection="true" ng-disabled = "locationADisabled" required/>
+               <button ng-click = "chooseCurrentLocation()" class="button button-light">Choose current location</button>
             </label>
 
+            
             
 
             <label class="item item-input">
               <span class="input-label">B</span>
                <!--<input name = "end" placeholder = "Enter end location" id = "Autocomplete" type="text" ng-autocomplete ng-model = "result2" details = "details2" required>-->
-               <input name = "end" type="text" g-places-autocomplete ng-model="details2" placeholder = "Enter end location" options = "autocompleteOptions" force-selection="true" required/>
+               <input name = "end" type="text" g-places-autocomplete ng-model="details2" placeholder = "Enter end location" options = "autocompleteOptions" force-selection="true" ng-disabled = "locationBDisabled" required/>
+               <button ng-click = "chooseCurrentLocation()" class="button button-light">Choose current location</button>
             </label>
 
             <button class = "button button-block button-assertive" ng-show="directionForm.end.$error.required && directionForm.end.$touched || directionForm.start.$error.required && directionForm.start.$touched" disabled>Please enter valid locations.</button> 

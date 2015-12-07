@@ -98,7 +98,7 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('pollutionMapCtrl', function($scope, $cordovaGeolocation) {
+.controller('pollutionMapCtrl', function($scope, $cordovaGeolocation, $ionicLoading, $ionicPlatform) {
 
 $scope.$on('$stateChangeStart', 
              function(event, toState, toParams, fromState, fromParams){ 
@@ -121,14 +121,26 @@ $scope.$on('$stateChangeStart',
  	 $scope.$on('mapInitialized', function(event, map) {
       //map.setCenter(new google.maps.LatLng(51.5085300, -0.1257400));
       //$scope.map.setZoom(12);
+       var layer = new google.maps.FusionTablesLayer({
+		    query: {
+		       select: 'geometry',
+		        from: '1pHZ_F-xDRFU0omNrpu-SdLoVYOm0Fm5CPDdSsbab'
+		    }, 
+		    styleId: 2, 
+  			map: map 
+	  	});
 
-      
-	  var options = {timeout: 10000, enableHighAccuracy: true};
+	  layer.setMap($scope.map);
+
+
+	  var options = {timeout: 30000, enableHighAccuracy: true};
       $cordovaGeolocation.getCurrentPosition(options).then(function(position){
  		
 	    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);	
 	    $scope.currentLat=position.coords.latitude;
 		$scope.currentLng=position.coords.longitude;
+
+		
 
 	 	 marker = new google.maps.Marker({
 			position: latLng,
@@ -139,12 +151,23 @@ $scope.$on('$stateChangeStart',
 	   		console.log("Could not get location");
 	   		console.log(error);
 	  	});
-	    });
+
+
+
+
+      });
+
+
+ 	 /*$ionicPlatform.ready(function(){
+       
+	    }); */
 
  	 $scope.updateMap = function (lat, lng) {
 		$scope.map.setCenter(new google.maps.LatLng(lat, lng));
 		$scope.map.setZoom(15);
  	}
+      
+	  
 
 
 
@@ -437,7 +460,71 @@ var marker;
 	$scope.timeHours = Math.floor($scope.timeMs/3600000);
 })
 
-.controller('runCtrl', function($scope, $timeout, $cordovaGeolocation, $state, $interval) {
+.controller('runCtrl', function($scope, $timeout, $cordovaGeolocation, $state, $interval, $cordovaLocalNotification) {
+
+	//http://devdactic.com/local-notifications-ionic/
+	//local notification
+	  $scope.add = function() {
+        var alarmTime = new Date();
+        //current datetime + 1 minute, so trigger in 1 minute
+        alarmTime.setMinutes(alarmTime.getMinutes());
+        $cordovaLocalNotification.add({
+            id: "1234",
+            date: alarmTime,
+            message: "You are execercising in a polluted area!",
+            title: "Warning",
+            autoCancel: true,
+            sound: null
+        }).then(function () {
+            console.log("The notification has been set");
+        });
+    };
+ 	
+ 	//if a notification is pending
+    $scope.isScheduled = function() {
+        $cordovaLocalNotification.isScheduled("1234").then(function(isScheduled) {
+            alert("Notification 1234 Scheduled: " + isScheduled);
+        });
+    }
+
+
+
+     var promise2;
+    // starts the interval
+    $scope.start2 = function() {
+      // stops any running interval to avoid two intervals running at the same time
+      $scope.stop2(); 
+      // store the interval promise
+      promise2 = $interval(checkLocation, 1800000);//every 30 minutes
+    };
+    // stops the interval
+    $scope.stop2 = function() {
+      $interval.cancel(promise2);
+    };
+    // starting the interval by default
+    $scope.start2();
+    // stops the interval when the scope is destroyed,
+    // this usually happens when a route is changed and 
+    // the ItemsController $scope gets destroyed. The
+    // destruction of the ItemsController scope does not
+    // guarantee the stopping of any intervals, you must
+    // be responsible of stopping it when the scope is
+    // is destroyed.
+    $scope.$on('$destroy', function() {
+      $scope.stop2();
+    });
+
+    function checkLocation(){
+    	console.log("checking location");
+    	if($scope.pollutionData > 150){
+    		$scope.add();
+    	}
+    }
+
+
+//--------------------------------------------------------------
+
+
 
 	$scope.$on('$stateChangeStart', 
              function(event, toState, toParams, fromState, fromParams){ 
@@ -446,8 +533,9 @@ var marker;
     			logout();
   		});
 
-	$scope.pollutionText = "Calculating pollution levels...";
 
+	$scope.pollutionText = "Calculating pollution levels...";
+	$scope.pollutionValue = 50;
 
 	$scope.workout = getWorkoutType($state.params.workoutId);
 
@@ -455,6 +543,7 @@ var marker;
 	$scope.currentLng = "";
 	$scope.timeInMilis = "";
 	$scope.health = 100;
+
 
 	var marker;
 	var options = {timeout: 10000, enableHighAccuracy: true};
@@ -475,7 +564,9 @@ var marker;
 		    query: {
 		       select: 'geometry',
 		        from: '1pHZ_F-xDRFU0omNrpu-SdLoVYOm0Fm5CPDdSsbab'
-		    }
+		    }, 
+		    styleId: 2, 
+  			map: map 
 	  	});
 	  layer.setMap($scope.map);
 
@@ -574,6 +665,7 @@ var marker;
 	        });
 	    //}, 3000);
 		var pollutionData = checkPollution(location.lat, location.lng);
+		$scope.pollutionValue = pollutionData["value"];
 	    $scope.pollutionText = pollutionData["text"];
 	    $scope.health = changeHealth($scope.health, pollutionData["value"]);
 	
@@ -904,7 +996,9 @@ var marker;
 		    query: {
 		       select: 'geometry',
 		        from: '1pHZ_F-xDRFU0omNrpu-SdLoVYOm0Fm5CPDdSsbab'
-		    }
+		    }, 
+		    styleId: 2, 
+  			map: map 
 	  	});
 	  layer.setMap($scope.map);
 

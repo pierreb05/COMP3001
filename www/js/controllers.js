@@ -79,9 +79,12 @@ function checkPollution(lat, lng){
 }
 
 function changeHealth(currentHealth, pollutionValue)
-{
+{	console.log(currentHealth+ "isc");
+	console.log("changehealth");
 	// < 125 = heal, >=125 take damage
-	var newHealth = (currentHealth -((currentHealth-125)/75)).toFixed(2);
+	console.log("value"+pollutionValue)
+	var newHealth = (currentHealth -((pollutionValue-125)/75)).toFixed(2);
+	console.log(newHealth);
 	if (newHealth >= 100){
 		newHealth = 100;
 	}
@@ -527,8 +530,18 @@ var marker;
 
 .controller('runCtrl', function($scope, $timeout, $cordovaGeolocation, $state, $interval, $cordovaLocalNotification) {
 
+	$scope.$on("$cordovaLocalNotification:added", function(id, state, json) {
+	    alert("Added a notification");
+	});
+
+
+
 	//http://devdactic.com/local-notifications-ionic/
 	//local notification
+	$scope.add2 = function(){
+		console.log("adasdasadsadsadssa");
+	}
+
 	  $scope.add = function() {
         var alarmTime = new Date();
         //current datetime + 1 minute, so trigger in 1 minute
@@ -553,14 +566,14 @@ var marker;
     }
 
 
-
+    //$scope.add();
      var promise2;
     // starts the interval
     $scope.start2 = function() {
       // stops any running interval to avoid two intervals running at the same time
       $scope.stop2(); 
       // store the interval promise
-      promise2 = $interval(checkLocation, 1800000);//every 30 minutes
+      promise2 = $interval(checkLocation, 900000);//every 15 minutes
       //promise2 = $interval(checkLocation, 5000);
     };
     // stops the interval

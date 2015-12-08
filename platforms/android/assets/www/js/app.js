@@ -46,7 +46,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
       StatusBar.styleDefault();
     }
 
-      window.plugin.notification.local.onadd = function (id, state, json) {
+     window.plugin.notification.local.onadd = function (id, state, json) {
             var notification = {
                 id: id,
                 state: state,

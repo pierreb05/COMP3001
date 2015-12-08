@@ -14,6 +14,7 @@ angular.module('app.routes', [])
       url: '/home',
       templateUrl: 'templates/home.html',
       controller: 'homeCtrl'
+      
     })
         
       

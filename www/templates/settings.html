@@ -1,4 +1,9 @@
 <ion-view title="Settings">
+
+    <!--<div class="bar bar-header bar-stable">
+         <a href = "#/home"class=" button icon-left ion-chevron-left button-clear">Home</a>
+      </div>-->
+
     <ion-content padding="true" class="has-header">
         <img id="settings-icon" src="img/settings.png">
 
@@ -7,11 +12,11 @@
             <div style="margin-bottom: 10px; font-size:110%">
                 Alert me when I am
             </div>
-
-            <ion-checkbox>Entering a high risk zone</ion-checkbox>
-            <ion-checkbox>Entering a medium risk zone</ion-checkbox>
-            <ion-checkbox>Deviating from the route set up</ion-checkbox>
+         
+            <ion-checkbox ng-model = "settings.high">Entering a high risk zone</ion-checkbox>
+            <ion-checkbox ng-model = "settings.medium">Entering a medium risk zone</ion-checkbox>
+            <!--<ion-checkbox>Deviating from the route set up</ion-checkbox>-->
         </form>
-        <a  href = "#/home"><button class="button button-block button-calm"> Save </button></a>
+        <a href = "#/home" ><button ng-click = "saveData()" class="button button-block button-calm"> Save </button></a>
     </ion-content>
 </ion-view>

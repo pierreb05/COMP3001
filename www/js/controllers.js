@@ -1,6 +1,9 @@
 function startApp(){
 //workout list (30min, 1 hour etc) not in any controller
 var custom;
+
+
+
 var workoutType = [
 	{
 		id : '1',
@@ -96,6 +99,9 @@ angular.module('app.controllers', [])
 
 .controller('homeCtrl', function($scope) {
 
+
+	//console.log(window.localStorage.getItem("settings"));
+	console.log("ss");
 })
 
 .controller('pollutionMapCtrl', function($scope, $cordovaGeolocation, $ionicLoading, $ionicPlatform) {
@@ -249,7 +255,54 @@ $scope.$on('$stateChangeStart',
 })
 
 .controller('settingsCtrl', function($scope) {
+	//$scope.high = true
+	//ngmodel needs to be an object (need)
 
+	$scope.high;
+	$scope.medium;
+
+	if(window.localStorage.getItem("settings")==3)
+	{
+		$scope.high = true;
+		$scope.medium = true ;
+	} else if(window.localStorage.getItem("settings")==2)
+	{
+		$scope.high = true;
+		$scope.medium = false ;
+	} else if(window.localStorage.getItem("settings")==1)
+	{
+		$scope.high = false;
+		$scope.medium = true ;
+	} else {
+		$scope.high = false;
+		$scope.medium = false ;
+	}
+
+	$scope.settings = {
+	  high:  $scope.high,
+	  medium: $scope.medium
+	};
+
+	//$scope.copy = angular.copy($scope.settings);
+
+	$scope.saveData = function(){
+		console.log($scope.settings.high);
+		console.log($scope.settings.medium);
+	
+		//1 = medium
+		//2 = high
+		//3 = both
+		if($scope.settings.medium == true && $scope.settings.high == true){
+			window.localStorage.setItem("settings", 3);
+		} else if ($scope.settings.medium == true){
+			window.localStorage.setItem("settings", 1);
+		} else {
+			window.localStorage.setItem("settings", 2);
+		}
+		
+		
+		
+	};
 })
 
 .controller('directionCtrl', function($scope,  $cordovaGeolocation) {
@@ -261,27 +314,10 @@ $scope.$on('$stateChangeStart',
     			logout();
   		});
 
-$scope.locationADisabled = false;
-$scope.locationBDisabled = false;
-
-$scope.chooseCurrentLocationA = function(){
-	$scope.locationADisabled = true;
-};
-
-$scope.chooseCurrentLocationA = function(){
-	console.log("sds");
-	alert("asda");
-	$scope.locationBDisabled = true;
-};
 
 
 
 
-
-
-
-
-	
 
 $scope.autocompleteOptions = {
     componentRestrictions: { country: 'uk' },
@@ -525,6 +561,7 @@ var marker;
       $scope.stop2(); 
       // store the interval promise
       promise2 = $interval(checkLocation, 1800000);//every 30 minutes
+      //promise2 = $interval(checkLocation, 5000);
     };
     // stops the interval
     $scope.stop2 = function() {
@@ -545,9 +582,27 @@ var marker;
 
     function checkLocation(){
     	console.log("checking location");
-    	if($scope.pollutionData > 150){
-    		$scope.add();
+    	console.log($scope.pollutionValue);
+    	console.log(window.localStorage.getItem("settings"));
+    	switch(window.localStorage.getItem("settings")){
+    		case "1":
+    			if($scope.pollutionData < 150 && $scope.pollutionData > 100){
+		    		$scope.add();
+		    	}
+    			break;
+    		case "2":
+    			if($scope.pollutionData > 150 ){
+		    		$scope.add();
+		    	}
+    			break;
+    		case "3":
+    			console.log("above 100!");
+    			if($scope.pollutionData > 100){
+		    		$scope.add();
+		    	}
+    			break;
     	}
+    	
     }
 
 
@@ -992,7 +1047,7 @@ var marker;
 	    
 	  });*/
 	
-	//statemanager angular (different from ionic view lifecycle)
+	//ui-router angular (different from ionic view lifecycle)
 	$scope.$on('$stateChangeStart', 
              function(event, toState, toParams, fromState, fromParams){ 
     			//$ionicLoading.show();

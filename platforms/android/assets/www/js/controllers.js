@@ -533,9 +533,15 @@ var marker;
 	$scope.$on("$cordovaLocalNotification:added", function(id, state, json) {
 	    alert("Added a notification");
 	});
-	
+
+
+
 	//http://devdactic.com/local-notifications-ionic/
 	//local notification
+	$scope.add2 = function(){
+		console.log("adasdasadsadsadssa");
+	}
+
 	  $scope.add = function() {
         var alarmTime = new Date();
         //current datetime + 1 minute, so trigger in 1 minute
@@ -560,15 +566,15 @@ var marker;
     }
 
 
-
+    //$scope.add();
      var promise2;
     // starts the interval
     $scope.start2 = function() {
       // stops any running interval to avoid two intervals running at the same time
       $scope.stop2(); 
       // store the interval promise
-      //promise2 = $interval(checkLocation, 1800000);//every 30 minutes
-      promise2 = $interval(checkLocation, 5000);
+      promise2 = $interval(checkLocation, 900000);//every 15 minutes
+      //promise2 = $interval(checkLocation, 5000);
     };
     // stops the interval
     $scope.stop2 = function() {

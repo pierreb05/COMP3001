@@ -614,6 +614,8 @@ var marker;
 		    		$scope.add();
 		    	}
     			break;
+    		default:
+    			console.log("no notifications");
     	}
     	
     }

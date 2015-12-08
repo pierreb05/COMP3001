@@ -6,14 +6,18 @@
 
     <ion-content padding="true" class="has-header" ng-controller = "runCtrl">
 
-    <button class="button" ng-click="add()">Add notification</button>
-    <button class="button" ng-click="">Is Scheduled</button>
+    <!--<button class="button" ng-click="add()">Add notification</button>
+    <button class="button" ng-click="">Is Scheduled</button>-->
 
     	<div id="metrics">
     		<div id="health-status">
-    			<div id="health-heart-icon">
-    				{{health}}
-    			</div>
+                <div class="item item-image" style="height: auto">
+
+                    <img src = "img/heart.png" >
+                        
+                    </img>
+                </div>
+    			<h2>{{health}}</h2>
     		</div>
             
 
